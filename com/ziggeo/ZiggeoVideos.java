@@ -11,8 +11,8 @@ public class ZiggeoVideos {
         this.application = application;
     }
 
-    public JSONObject index(JSONObject data) throws IOException, JSONException {
-        return this.application.connect().getJSON("/videos/", data);
+    public JSONArray index(JSONObject data) throws IOException, JSONException {
+        return this.application.connect().getJSONArray("/videos/", data);
     }
 
     public JSONObject get(String token_or_key) throws IOException, JSONException {

@@ -3,6 +3,7 @@ package com.ziggeo;
 import org.json.*;
 import java.io.*;
 import java.util.*;
+import java.net.*;
 import org.apache.http.*;
 import org.apache.http.auth.*;
 import org.apache.http.impl.auth.*;
@@ -33,60 +34,41 @@ public class ZiggeoConnect {
 				CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
 
 		HttpRequestBase request = null;
-		
+
 		List<NameValuePair> nvps = new LinkedList<NameValuePair>();
+		String encodedStr = "";
 		if (data != null) {
 			Iterator<String> keys = data.keys();
 			while (keys.hasNext()) {
 				String key = keys.next();
 				nvps.add(new BasicNameValuePair(key, data.getString(key)));
+				encodedStr += key + "="
+						+ URLEncoder.encode(data.getString(key)) + "&";
 			}
 		}
-		UrlEncodedFormEntity encoded = new UrlEncodedFormEntity(nvps, Consts.UTF_8);
+		UrlEncodedFormEntity encoded = new UrlEncodedFormEntity(nvps,
+				Consts.UTF_8);
 
 		if (method.toUpperCase() == "GET")
 			request = new HttpGet(this.application.config().server_api_url
-					+ "/v1" + path + "?" + encoded.toString());
+					+ "/v1" + path + "?" + encodedStr);
 		else if (method.toUpperCase() == "POST")
 			request = new HttpPost(this.application.config().server_api_url
 					+ "/v1" + path);
 		else
 			request = new HttpDelete(this.application.config().server_api_url
-					+ "/v1" + path + "?" + encoded.toString());
+					+ "/v1" + path + "?" + encodedStr);
 
-		HttpRequestInterceptor preemptiveAuth = new HttpRequestInterceptor() {
-			public void process(final HttpRequest request,
-					final HttpContext context) throws HttpException,
-					IOException {
-				AuthState authState = (AuthState) context
-						.getAttribute(ClientContext.TARGET_AUTH_STATE);
-				CredentialsProvider credsProvider = (CredentialsProvider) context
-						.getAttribute(ClientContext.CREDS_PROVIDER);
-				HttpHost targetHost = (HttpHost) context
-						.getAttribute(ExecutionContext.HTTP_TARGET_HOST);
-
-				if (authState.getAuthScheme() == null) {
-					AuthScope authScope = new AuthScope(
-							targetHost.getHostName(), targetHost.getPort());
-					Credentials creds = credsProvider.getCredentials(authScope);
-					if (creds != null) {
-						authState.setAuthScheme(new BasicScheme());
-						authState.setCredentials(creds);
-					}
-				}
-			}
-		};
-
-		httpclient.addRequestInterceptor(preemptiveAuth, 0);
-		Credentials defaultcreds = new UsernamePasswordCredentials(
-				this.application.token, this.application.private_key);
 		httpclient.getCredentialsProvider().setCredentials(
-				new AuthScope("ziggeo.com", 443, AuthScope.ANY_REALM),
-				defaultcreds);
+				new AuthScope(
+						new URL(application.config().server_api_url).getHost(),
+						AuthScope.ANY_PORT),
+				new UsernamePasswordCredentials(this.application.token,
+						this.application.private_key));
 
 		if (file != null && method.toUpperCase() == "POST") {
 			MultipartEntity mpEntity = new MultipartEntity();
-			for (NameValuePair nv: nvps)
+			for (NameValuePair nv : nvps)
 				mpEntity.addPart(nv.getName(), new StringBody(nv.getValue()));
 			ContentBody cbFile = new FileBody(file, "video");
 			mpEntity.addPart("file", cbFile);
@@ -98,21 +80,50 @@ public class ZiggeoConnect {
 		HttpResponse response = httpclient.execute(request);
 		HttpEntity resEntity = response.getEntity();
 
-		httpclient.getConnectionManager().shutdown();
+		// httpclient.getConnectionManager().shutdown();
 		return resEntity.getContent();
+	}
+
+	public String requestString(String method, String path, JSONObject data,
+			File file) throws IOException, JSONException {
+		InputStream inputStream = this.request(method, path, data, file);
+
+		StringBuilder inputStringBuilder = new StringBuilder();
+		BufferedReader bufferedReader = new BufferedReader(
+				new InputStreamReader(inputStream, "UTF-8"));
+		String line = bufferedReader.readLine();
+		while (line != null) {
+			inputStringBuilder.append(line);
+			inputStringBuilder.append('\n');
+			line = bufferedReader.readLine();
+		}
+
+		return inputStringBuilder.toString();
 	}
 
 	public JSONObject requestJSON(String method, String path, JSONObject data,
 			File file) throws IOException, JSONException {
-		return new JSONObject(this.request(method, path, data, file));
+		return new JSONObject(this.requestString(method, path, data, file));
 	}
 
-	public InputStream get(String path, JSONObject data) throws IOException, JSONException {
+	public JSONArray requestJSONArray(String method, String path, JSONObject data,
+			File file) throws IOException, JSONException {
+		return new JSONArray(this.requestString(method, path, data, file));
+	}
+
+	public InputStream get(String path, JSONObject data) throws IOException,
+			JSONException {
 		return this.request("GET", path, data, null);
 	}
 
-	public JSONObject getJSON(String path, JSONObject data) throws IOException, JSONException {
+	public JSONObject getJSON(String path, JSONObject data) throws IOException,
+			JSONException {
 		return this.requestJSON("GET", path, data, null);
+	}
+
+	public JSONArray getJSONArray(String path, JSONObject data) throws IOException,
+			JSONException {
+		return this.requestJSONArray("GET", path, data, null);
 	}
 
 	public InputStream post(String path, JSONObject data, File file)
@@ -125,7 +136,8 @@ public class ZiggeoConnect {
 		return this.requestJSON("POST", path, data, file);
 	}
 
-	public InputStream delete(String path, JSONObject data) throws IOException, JSONException {
+	public InputStream delete(String path, JSONObject data) throws IOException,
+			JSONException {
 		return this.request("DELETE", path, data, null);
 	}
 
