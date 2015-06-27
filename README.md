@@ -5,7 +5,9 @@ Ziggeo API (http://ziggeo.com) allows you to integrate video recording and playb
 two lines of code in your site, service or app. This is the Java Server SDK repository. It's open source,
 so if you want to improve on it, feel free to add a pull request.
 
-Copyright (c) 2014 Ziggeo
+Copyright (c) 2015 Ziggeo
+
+Apache 2.0 License
 
 Requirements:
 - Org Json Java : https://code.google.com/p/org-json-java/downloads/list

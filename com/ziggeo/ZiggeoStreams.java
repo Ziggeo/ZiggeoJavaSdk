@@ -35,5 +35,17 @@ public class ZiggeoStreams {
         return this.application.connect().postJSON("/videos/" + video_token_or_key + "/streams", data, file);
     }
 
+    public JSONObject attach_image(String video_token_or_key, String token_or_key, JSONObject data, File file) throws IOException, JSONException {
+        return this.application.connect().postJSON("/videos/" + video_token_or_key + "/streams/" + token_or_key + "/image", data, file);
+    }
+
+    public JSONObject attach_video(String video_token_or_key, String token_or_key, JSONObject data, File file) throws IOException, JSONException {
+        return this.application.connect().postJSON("/videos/" + video_token_or_key + "/streams/" + token_or_key + "/video", data, file);
+    }
+
+    public JSONObject bind(String video_token_or_key, String token_or_key) throws IOException, JSONException {
+        return this.application.connect().postJSON("/videos/" + video_token_or_key + "/streams/" + token_or_key + "/bind", null, null);
+    }
+
 }
 
