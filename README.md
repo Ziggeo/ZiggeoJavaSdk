@@ -9,6 +9,7 @@ Copyright (c) 2015 Ziggeo
 
 Apache 2.0 License
 
-Requirements:
-- Org Json Java : https://code.google.com/p/org-json-java/downloads/list
-- Apache Http Components : http://hc.apache.org/downloads.cgi
+Building
+--
+
+mvn clean install
