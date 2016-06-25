@@ -37,8 +37,8 @@ public class ZiggeoAuth {
 		byte[] hashed_key = md.digest();
 		Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5padding");
 		SecretKeySpec skeySpec = new SecretKeySpec(hashed_key, "AES");
-		cipher.init(Cipher.ENCRYPT_MODE, skeySpec, new IvParameterSpec(
-				new byte[8]));
+                cipher.init(Cipher.ENCRYPT_MODE, skeySpec,
+                            new IvParameterSpec(new byte[16]));
 		byte[] encrypted = cipher.doFinal(plaintext.getBytes());
 		return Base64.getEncoder().encodeToString(encrypted);
 	}
