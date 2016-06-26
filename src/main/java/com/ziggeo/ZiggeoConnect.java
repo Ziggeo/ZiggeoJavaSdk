@@ -40,10 +40,11 @@ public class ZiggeoConnect {
 		if (data != null) {
 			Iterator<String> keys = data.keys();
 			while (keys.hasNext()) {
-				String key = keys.next();
-				nvps.add(new BasicNameValuePair(key, data.getString(key)));
-				encodedStr += key + "="
-						+ URLEncoder.encode(data.getString(key)) + "&";
+                                String key = keys.next();
+                                String value = data.get(key).toString();
+                                nvps.add(new BasicNameValuePair(key, value));
+                                encodedStr += key + "=" +
+                                        URLEncoder.encode(value) + "&";
 			}
 		}
 		UrlEncodedFormEntity encoded = new UrlEncodedFormEntity(nvps,
