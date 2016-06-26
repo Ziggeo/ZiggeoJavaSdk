@@ -1,4 +1,4 @@
-# Ziggeo Java Server SDK 0.0.6
+# Ziggeo Java Server SDK 0.0.13
 
 Ziggeo API (http://ziggeo.com) allows you to integrate video recording and playback with only
 two lines of code in your site, service or app. This is the Java Server SDK repository.
@@ -71,7 +71,7 @@ Arguments
 - skip: *Skip the first [n] entries.* 
 - reverse: *Reverse the order in which videos are returned.* 
 - states: *Filter videos by state* 
-- tags: *Filter the search result to certain tags* 
+- tags: *Filter the search result to certain tags, encoded as a comma-separated string* 
 
 
 #### Get 

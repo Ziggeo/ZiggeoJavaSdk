@@ -27,6 +27,18 @@ public class ZiggeoAuth {
 		return System.currentTimeMillis() + ""
 				+ Math.floor((Math.random() * (Math.pow(2, 32) - 1)));
 	}
+	
+	final private static char[] hexArray = "0123456789abcdef".toCharArray();
+	
+	private static String bytesToHex(byte[] bytes) {
+	    char[] hexChars = new char[bytes.length * 2];
+	    for ( int j = 0; j < bytes.length; j++ ) {
+	        int v = bytes[j] & 0xFF;
+	        hexChars[j * 2] = hexArray[v >>> 4];
+	        hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+	    }
+	    return new String(hexChars);
+	}
 
 	private String encrypt(String plaintext) throws NoSuchAlgorithmException,
 			InvalidKeyException, NoSuchPaddingException,
@@ -34,13 +46,15 @@ public class ZiggeoAuth {
 			BadPaddingException {
 		MessageDigest md = MessageDigest.getInstance("MD5");
 		md.update(this.application.encryption_key.getBytes());
-		byte[] hashed_key = md.digest();
+		SecretKeySpec skeySpec = new SecretKeySpec(bytesToHex(md.digest()).getBytes(), "AES");
 		Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5padding");
-		SecretKeySpec skeySpec = new SecretKeySpec(hashed_key, "AES");
-		cipher.init(Cipher.ENCRYPT_MODE, skeySpec, new IvParameterSpec(
-				new byte[8]));
+		byte[] iv = new byte[8];
+	    SecureRandom sr = new SecureRandom();
+	    sr.nextBytes(iv);
+	    String ivx = bytesToHex(iv); 
+	    cipher.init(Cipher.ENCRYPT_MODE, skeySpec, new IvParameterSpec(ivx.getBytes()));
 		byte[] encrypted = cipher.doFinal(plaintext.getBytes());
-		return Base64.getEncoder().encodeToString(encrypted);
+		return ivx + bytesToHex(encrypted);
 	}
 
 }
