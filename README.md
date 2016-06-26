@@ -6,6 +6,11 @@ two lines of code in your site, service or app. This is the Java Server SDK repo
 Pull requests welcome.
 
 
+## Installation
+
+Make sure to install Java Cryptography Extension (JCE) Unlimited Strength.
+
+
 ## Building
 
 mvn clean install
