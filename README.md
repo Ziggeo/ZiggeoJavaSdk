@@ -1,6 +1,6 @@
-# Ziggeo Java Server SDK 0.0.13
+# Ziggeo Java Server SDK 0.0.15
 
-Ziggeo API (http://ziggeo.com) allows you to integrate video recording and playback with only
+Ziggeo API (https://ziggeo.com) allows you to integrate video recording and playback with only
 two lines of code in your site, service or app. This is the Java Server SDK repository.
 
 Pull requests welcome.
@@ -59,7 +59,7 @@ Ziggeo ziggeo = new Ziggeo("*token*", "*private_key*", "*encryption_key*");
 ## Server-Side Methods
 
 ### Videos  
- 
+
 The videos resource allows you to access all single videos. Each video may contain more than one stream. 
  
 
@@ -109,6 +109,18 @@ ziggeo.videos().download_image(String token_or_key)
  
 
 
+#### Push To Service 
+ 
+Push a video to a provided push service. 
+
+```java 
+ziggeo.videos().push_to_service(String token_or_key, JSONObject arguments) 
+``` 
+ 
+Arguments 
+- pushservicetoken: *Push Services's token (from the Push Services configured for the app)* 
+
+
 #### Update 
  
 Update single video by token or key. 
@@ -154,7 +166,7 @@ Arguments
 
 
 ### Streams  
- 
+
 The streams resource allows you to directly access all streams associated with a single video. 
  
 
@@ -198,6 +210,18 @@ Download the image data associated with the stream
 ziggeo.streams().download_image(String video_token_or_key, String token_or_key) 
 ``` 
  
+
+
+#### Push To Service 
+ 
+Push a stream to a provided push service. 
+
+```java 
+ziggeo.streams().push_to_service(String video_token_or_key, String token_or_key, JSONObject arguments) 
+``` 
+ 
+Arguments 
+- pushservicetoken: *Push Services's token (from the Push Services configured for the app)* 
 
 
 #### Delete 
@@ -257,7 +281,7 @@ ziggeo.streams().bind(String video_token_or_key, String token_or_key, JSONObject
 
 
 ### Authtokens  
- 
+
 The auth token resource allows you to manage authorization settings for video objects. 
  
 

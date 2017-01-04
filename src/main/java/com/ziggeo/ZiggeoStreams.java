@@ -27,6 +27,10 @@ public class ZiggeoStreams {
         return this.application.connect().get("/videos/" + video_token_or_key + "/streams/" + token_or_key + "/image", null);
     }
 
+    public JSONObject push_to_service(String video_token_or_key, String token_or_key, JSONObject data) throws IOException, JSONException {
+        return this.application.connect().postJSON("/videos/" + video_token_or_key + "/streams/" + token_or_key + "/push", data, null);
+    }
+
     public InputStream delete(String video_token_or_key, String token_or_key) throws IOException, JSONException {
         return this.application.connect().delete("/videos/" + video_token_or_key + "/streams/" + token_or_key + "", null);
     }
