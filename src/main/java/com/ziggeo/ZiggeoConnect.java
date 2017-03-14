@@ -29,6 +29,12 @@ public class ZiggeoConnect {
 
 	public InputStream request(String method, String path, JSONObject data,
 			File file) throws IOException, JSONException {
+		String server_api_url = application.config().server_api_url;
+		for (Map.Entry<String, String> entry : application.config().regions.entrySet()) {
+		    if (this.application.token.startsWith(entry.getKey()))
+		        server_api_url = entry.getValue();
+        }
+
 		DefaultHttpClient httpclient = new DefaultHttpClient();
 		httpclient.getParams().setParameter(
 				CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
@@ -51,18 +57,18 @@ public class ZiggeoConnect {
 				Consts.UTF_8);
 
 		if (method.toUpperCase() == "GET")
-			request = new HttpGet(this.application.config().server_api_url
+			request = new HttpGet(server_api_url
 					+ "/v1" + path + "?" + encodedStr);
 		else if (method.toUpperCase() == "POST")
-			request = new HttpPost(this.application.config().server_api_url
+			request = new HttpPost(server_api_url
 					+ "/v1" + path);
 		else
-			request = new HttpDelete(this.application.config().server_api_url
+			request = new HttpDelete(server_api_url
 					+ "/v1" + path + "?" + encodedStr);
 
 		httpclient.getCredentialsProvider().setCredentials(
 				new AuthScope(
-						new URL(application.config().server_api_url).getHost(),
+						new URL(server_api_url).getHost(),
 						AuthScope.ANY_PORT),
 				new UsernamePasswordCredentials(this.application.token,
 						this.application.private_key));
