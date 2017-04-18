@@ -31,6 +31,10 @@ public class ZiggeoVideos {
         return this.application.connect().postJSON("/videos/" + token_or_key + "/push", data, null);
     }
 
+    public JSONObject apply_effect(String token_or_key, JSONObject data) throws IOException, JSONException {
+        return this.application.connect().postJSON("/videos/" + token_or_key + "/effect", data, null);
+    }
+
     public JSONObject update(String token_or_key, JSONObject data) throws IOException, JSONException {
         return this.application.connect().postJSON("/videos/" + token_or_key + "", data, null);
     }
