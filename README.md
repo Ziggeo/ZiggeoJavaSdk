@@ -1,4 +1,4 @@
-# Ziggeo Java Server SDK 0.0.19
+# Ziggeo Java Server SDK 0.1.1
 
 Ziggeo API (https://ziggeo.com) allows you to integrate video recording and playback with only
 two lines of code in your site, service or app. This is the Java Server SDK repository.
@@ -16,19 +16,26 @@ Make sure to install Java Cryptography Extension (JCE) Unlimited Strength.
 mvn clean install
 
 
+    ## Demo
+
+    mvn exec:java -Dexec.mainClass=com.ziggeo.demos.VideoListLimit -Dexec.args='TOKEN PRIVATE_KEY SKIP LIMIT'
+
+
 ## Client-Side Integration
 
 For the client-side integration, you need to add these assets to your html file:
 
 ```html 
-<link rel="stylesheet" href="//assets-cdn.ziggeo.com/v1-latest/ziggeo.css" /> 
-<script src="//assets-cdn.ziggeo.com/v1-latest/ziggeo.js"></script> 
+<link rel="stylesheet" href="//assets-cdn.ziggeo.com/v2-stable/ziggeo.css" />
+<script src="//assets-cdn.ziggeo.com/v2-stable/ziggeo.js"></script>
 ```
 
 Then, you need to specify your api token:
 ```html 
 <script>
-	ZiggeoApi.token = "APPLICATION_TOKEN"; 
+    var ziggeoApplication = new ZiggeoApi.V2.Application({
+        token: "APPLICATION_TOKEN"
+    });
 </script>
 ```
 
@@ -36,15 +43,16 @@ You can specify other global options, [see here](https://ziggeo.com/docs).
 
 To fire up a recorder on your page, add:
 ```html 
-<ziggeo></ziggeo> 
+<ziggeorecorder></ziggeorecorder>
 ``` 
 
 To embed a player for an existing video, add:
 ```html 
-<ziggeo ziggeo-video='video-token'></ziggeo> 
+<ziggeoplayer ziggeo-video='video-token'></ziggeoplayer>
 ``` 
 
 For the full documentation, please visit [ziggeo.com](https://ziggeo.com/docs).
+
 
 
 ## Server-Side Integration
@@ -472,6 +480,6 @@ Arguments
 
 ## License
 
-Copyright (c) 2013-2017 Ziggeo
+Copyright (c) 2013-2018 Ziggeo
  
 Apache 2.0 License
