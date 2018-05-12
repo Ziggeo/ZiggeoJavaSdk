@@ -15,8 +15,16 @@ public class ZiggeoVideos {
         return this.application.connect().getJSONArray("/videos/", data);
     }
 
+    public JSONObject count(JSONObject data) throws IOException, JSONException {
+        return this.application.connect().getJSON("/videos/count", data);
+    }
+
     public JSONObject get(String token_or_key) throws IOException, JSONException {
         return this.application.connect().getJSON("/videos/" + token_or_key + "", null);
+    }
+
+    public JSONArray get_bulk(JSONObject data) throws IOException, JSONException {
+        return this.application.connect().postJSONArray("/videos/get_bulk", data, null);
     }
 
     public InputStream download_video(String token_or_key) throws IOException, JSONException {
@@ -39,12 +47,20 @@ public class ZiggeoVideos {
         return this.application.connect().postJSON("/videos/" + token_or_key + "", data, null);
     }
 
+    public JSONArray update_bulk(JSONObject data) throws IOException, JSONException {
+        return this.application.connect().postJSONArray("/videos/update_bulk", data, null);
+    }
+
     public InputStream delete(String token_or_key) throws IOException, JSONException {
         return this.application.connect().delete("/videos/" + token_or_key + "", null);
     }
 
     public JSONObject create(JSONObject data, File file) throws IOException, JSONException {
         return this.application.connect().postJSON("/videos/", data, file);
+    }
+
+    public JSONArray analytics(String token_or_key, JSONObject data) throws IOException, JSONException {
+        return this.application.connect().postJSONArray("/videos/" + token_or_key + "/analytics", data, null);
     }
 
 }
