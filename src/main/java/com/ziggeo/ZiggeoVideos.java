@@ -27,12 +27,20 @@ public class ZiggeoVideos {
         return this.application.connect().postJSONArray("/videos/get_bulk", data, null);
     }
 
+    public JSONArray stats_bulk(JSONObject data) throws IOException, JSONException {
+        return this.application.connect().postJSONArray("/videos/stats_bulk", data, null);
+    }
+
     public InputStream download_video(String token_or_key) throws IOException, JSONException {
         return this.application.connect().get("/videos/" + token_or_key + "/video", null);
     }
 
     public InputStream download_image(String token_or_key) throws IOException, JSONException {
         return this.application.connect().get("/videos/" + token_or_key + "/image", null);
+    }
+
+    public JSONObject get_stats(String token_or_key) throws IOException, JSONException {
+        return this.application.connect().getJSON("/videos/" + token_or_key + "/stats", null);
     }
 
     public JSONObject push_to_service(String token_or_key, JSONObject data) throws IOException, JSONException {

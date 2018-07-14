@@ -11,6 +11,8 @@ public class Ziggeo {
 	private ZiggeoStreams streamsObj = null;
 	private ZiggeoEffectProfiles effectProfilesObj = null;
 	private ZiggeoEffectProfileProcess effectProfileProcessObj = null;
+	private ZiggeoMetaProfiles metaProfilesObj = null;
+	private ZiggeoMetaProfileProcess metaProfileProcessObj = null;
 	private ZiggeoAuthtokens authtokensObj = null;
 	private ZiggeoAuth authObj = null;
 	private ZiggeoAnalytics analyticsObj = null;
@@ -54,6 +56,18 @@ public class Ziggeo {
 		if (this.effectProfileProcessObj == null)
 			this.effectProfileProcessObj = new ZiggeoEffectProfileProcess(this);
 		return this.effectProfileProcessObj;
+	}
+
+	public ZiggeoMetaProfiles metaProfiles() {
+		if (this.metaProfilesObj == null)
+			this.metaProfilesObj = new ZiggeoMetaProfiles(this);
+		return this.metaProfilesObj;
+	}
+
+	public ZiggeoMetaProfileProcess metaProfileProcess() {
+		if (this.metaProfileProcessObj == null)
+			this.metaProfileProcessObj = new ZiggeoMetaProfileProcess(this);
+		return this.metaProfileProcessObj;
 	}
 
 	public ZiggeoAuthtokens authtokens() {
