@@ -133,9 +133,9 @@ public class ZiggeoConnect {
 		return this.requestJSONArray("GET", path, data, null);
 	}
 
-	public JSONArray postJSONArray(String path, JSONObject data) throws IOException,
+	public JSONArray postJSONArray(String path, JSONObject data, File file) throws IOException,
 			JSONException {
-		return this.requestJSONArray("POST", path, data, null);
+		return this.requestJSONArray("POST", path, data, file);
 	}
 
 	public InputStream post(String path, JSONObject data, File file)
