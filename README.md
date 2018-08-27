@@ -1,4 +1,4 @@
-# Ziggeo Java Server SDK 0.1.5
+# Ziggeo Java Server SDK 0.1.7
 
 Ziggeo API (https://ziggeo.com) allows you to integrate video recording and playback with only
 two lines of code in your site, service or app. This is the Java Server SDK repository.
@@ -187,6 +187,18 @@ ziggeo.videos().apply_effect(String token_or_key, JSONObject arguments)
  
 Arguments 
 - effectprofiletoken: *Effect Profile token (from the Effect Profiles configured for the app)* 
+
+
+#### Apply Meta 
+ 
+Apply a meta profile to a video. 
+
+```java 
+ziggeo.videos().apply_meta(String token_or_key, JSONObject arguments) 
+``` 
+ 
+Arguments 
+- metaprofiletoken: *Meta Profile token (from the Meta Profiles configured for the app)* 
 
 
 #### Update 
