@@ -1,4 +1,4 @@
-# Ziggeo Java Server SDK 0.1.7
+# Ziggeo Java Server SDK 0.1.8
 
 Ziggeo API (https://ziggeo.com) allows you to integrate video recording and playback with only
 two lines of code in your site, service or app. This is the Java Server SDK repository.
@@ -451,6 +451,54 @@ Arguments
 - grants: *Permissions this tokens grants* 
 
 
+### Application  
+
+The application token resource allows you to manage your application. 
+ 
+
+#### Get 
+ 
+Read application. 
+
+```java 
+ziggeo.application().get() 
+``` 
+ 
+
+
+#### Update 
+ 
+Update application. 
+
+```java 
+ziggeo.application().update(JSONObject arguments) 
+``` 
+ 
+Arguments 
+- volatile: *Will this object automatically be deleted if it remains empty?* 
+- name: *Name of the application* 
+- auth_token_required_for_create: *Require auth token for creating videos* 
+- auth_token_required_for_update: *Require auth token for updating videos* 
+- auth_token_required_for_read: *Require auth token for reading videos* 
+- auth_token_required_for_destroy: *Require auth token for deleting videos* 
+- client_can_index_videos: *Client is allowed to perform the index operation* 
+- client_cannot_access_unaccepted_videos: *Client cannot view unaccepted videos* 
+- enable_video_subpages: *Enable hosted video pages* 
+- enable_facebook: *Enable Facebook Support for hosted video pages* 
+
+
+#### Get Stats 
+ 
+Read application stats 
+
+```java 
+ziggeo.application().get_stats(JSONObject arguments) 
+``` 
+ 
+Arguments 
+- period: *Optional. Can be 'year' or 'month'.* 
+
+
 ### EffectProfiles  
 
 The effect profiles resource allows you to access and create effect profiles for your app. Each effect profile may contain one process or more. 
@@ -467,6 +515,7 @@ ziggeo.effectProfiles().create(JSONObject arguments)
 Arguments 
 - key: *Effect profile key.* 
 - title: *Effect profile title.* 
+- default_effect: *Boolean. If TRUE, sets an effect profile as default. If FALSE, removes the default status for the given effect* 
 
 
 #### Index 
@@ -501,6 +550,18 @@ Delete the effect profile
 ziggeo.effectProfiles().delete(String token_or_key) 
 ``` 
  
+
+
+#### Update 
+ 
+Updates an effect profile. 
+
+```java 
+ziggeo.effectProfiles().update(String token_or_key, JSONObject arguments) 
+``` 
+ 
+Arguments 
+- default_effect: *Boolean. If TRUE, sets an effect profile as default. If FALSE, removes the default status for the given effect* 
 
 
 ### EffectProfileProcess  
@@ -562,9 +623,9 @@ ziggeo.effectProfileProcess().create_watermark_process(String effect_token_or_ke
  
 Arguments 
 - file: *Image file to be attached* 
-- vertical: *Specify the vertical position of your watermark (a value between 0.0 and 1.0)* 
-- horizontal: *Specify the horizontal position of your watermark (a value between 0.0 and 1.0)* 
-- scale: *Specify the image scale of your watermark (a value between 0.0 and 1.0)* 
+- vertical_position: *Specify the vertical position of your watermark (a value between 0.0 and 1.0)* 
+- horizontal_position: *Specify the horizontal position of your watermark (a value between 0.0 and 1.0)* 
+- video_scale: *Specify the image scale of your watermark (a value between 0.0 and 1.0)* 
 
 
 ### MetaProfiles  

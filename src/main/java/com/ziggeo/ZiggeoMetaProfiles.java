@@ -12,19 +12,19 @@ public class ZiggeoMetaProfiles {
     }
 
     public JSONObject create(JSONObject data) throws IOException, JSONException {
-        return this.application.connect().postJSON("/metaprofiles/", data, null);
+        return this.application.connect().postJSON("/v1/metaprofiles/", data, null);
     }
 
     public JSONObject index(JSONObject data) throws IOException, JSONException {
-        return this.application.connect().getJSON("/metaprofiles/", data);
+        return this.application.connect().getJSON("/v1/metaprofiles/", data);
     }
 
     public JSONObject get(String token_or_key) throws IOException, JSONException {
-        return this.application.connect().getJSON("/metaprofiles/" + token_or_key + "", null);
+        return this.application.connect().getJSON("/v1/metaprofiles/" + token_or_key + "", null);
     }
 
     public InputStream delete(String token_or_key) throws IOException, JSONException {
-        return this.application.connect().delete("/metaprofiles/" + token_or_key + "", null);
+        return this.application.connect().delete("/v1/metaprofiles/" + token_or_key + "", null);
     }
 
 }

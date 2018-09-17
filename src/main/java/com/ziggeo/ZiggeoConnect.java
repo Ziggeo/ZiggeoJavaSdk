@@ -22,19 +22,15 @@ import org.apache.http.client.entity.*;
 public class ZiggeoConnect {
 
 	private Ziggeo application;
+	private String baseUri;
 
-	public ZiggeoConnect(Ziggeo application) {
+	public ZiggeoConnect(Ziggeo application, String baseUri) {
 		this.application = application;
+		this.baseUri = baseUri;
 	}
 
 	public InputStream request(String method, String path, JSONObject data,
 			File file) throws IOException, JSONException {
-		String server_api_url = application.config().server_api_url;
-		for (Map.Entry<String, String> entry : application.config().regions.entrySet()) {
-		    if (this.application.token.startsWith(entry.getKey()))
-		        server_api_url = entry.getValue();
-        }
-
 		DefaultHttpClient httpclient = new DefaultHttpClient();
 		httpclient.getParams().setParameter(
 				CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
@@ -57,21 +53,16 @@ public class ZiggeoConnect {
 				Consts.UTF_8);
 
 		if (method.toUpperCase() == "GET")
-			request = new HttpGet(server_api_url
-					+ "/v1" + path + "?" + encodedStr);
+			request = new HttpGet(baseUri
+					+ path + "?" + encodedStr);
 		else if (method.toUpperCase() == "POST")
-			request = new HttpPost(server_api_url
-					+ "/v1" + path);
+			request = new HttpPost(baseUri
+					+ path);
 		else
-			request = new HttpDelete(server_api_url
-					+ "/v1" + path + "?" + encodedStr);
+			request = new HttpDelete(baseUri
+					+ path + "?" + encodedStr);
 
-		httpclient.getCredentialsProvider().setCredentials(
-				new AuthScope(
-						new URL(server_api_url).getHost(),
-						AuthScope.ANY_PORT),
-				new UsernamePasswordCredentials(this.application.token,
-						this.application.private_key));
+        request.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials(this.application.token, this.application.private_key), "UTF-8", false));
 
 		if (file != null && method.toUpperCase() == "POST") {
 			MultipartEntity mpEntity = new MultipartEntity();
