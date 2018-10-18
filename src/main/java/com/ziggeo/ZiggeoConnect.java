@@ -1,21 +1,20 @@
 package com.ziggeo;
 
+import org.apache.http.client.config.RequestConfig;
 import org.json.*;
+
 import java.io.*;
 import java.util.*;
 import java.net.*;
+
 import org.apache.http.*;
 import org.apache.http.auth.*;
 import org.apache.http.impl.auth.*;
-import org.apache.http.client.*;
 import org.apache.http.client.methods.*;
 import org.apache.http.entity.mime.*;
 import org.apache.http.entity.mime.content.*;
 import org.apache.http.impl.client.*;
 import org.apache.http.params.*;
-import org.apache.http.util.*;
-import org.apache.http.protocol.*;
-import org.apache.http.client.protocol.*;
 import org.apache.http.message.*;
 import org.apache.http.client.entity.*;
 
@@ -75,8 +74,14 @@ public class ZiggeoConnect {
 			((HttpPost) request).setEntity(encoded);
 		}
 
-		HttpResponse response = httpclient.execute(request);
-		HttpEntity resEntity = response.getEntity();
+        RequestConfig config = RequestConfig.custom()
+                .setSocketTimeout(application.config().getSocketTimeout())
+                .setConnectTimeout(application.config().getConnectionTimeout())
+                .build();
+        request.setConfig(config);
+
+        HttpResponse response = httpclient.execute(request);
+        HttpEntity resEntity = response.getEntity();
 
 		// httpclient.getConnectionManager().shutdown();
 		return resEntity.getContent();
