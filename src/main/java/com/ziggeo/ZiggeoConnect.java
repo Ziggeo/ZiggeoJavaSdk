@@ -27,6 +27,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ZiggeoConnect {
+    private static final String POST = "POST";
+    private static final String GET = "GET";
+    private static final String DELETE = "DELETE";
 
     private Ziggeo application;
     private String baseUri;
@@ -59,26 +62,23 @@ public class ZiggeoConnect {
         UrlEncodedFormEntity encoded = new UrlEncodedFormEntity(nvps,
                 Consts.UTF_8);
 
-        if (method.toUpperCase() == "GET")
-            request = new HttpGet(baseUri
-                    + path + "?" + encodedStr);
-        else if (method.toUpperCase() == "POST")
-            request = new HttpPost(baseUri
-                    + path);
-        else
-            request = new HttpDelete(baseUri
-                    + path + "?" + encodedStr);
-
+        if (GET.equalsIgnoreCase(method)) {
+            request = new HttpGet(baseUri + path + "?" + encodedStr);
+        } else if (POST.equalsIgnoreCase(method)) {
+            request = new HttpPost(baseUri + path);
+        } else {
+            request = new HttpDelete(baseUri + path + "?" + encodedStr);
+        }
         request.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials(this.application.token, this.application.private_key), "UTF-8", false));
 
-        if (file != null && method.toUpperCase() == "POST") {
+        if (file != null && POST.equalsIgnoreCase(method)) {
             MultipartEntity mpEntity = new MultipartEntity();
             for (NameValuePair nv : nvps)
                 mpEntity.addPart(nv.getName(), new StringBody(nv.getValue()));
             ContentBody cbFile = new FileBody(file, "video");
             mpEntity.addPart("file", cbFile);
             ((HttpPost) request).setEntity(mpEntity);
-        } else if (method.toUpperCase() == "POST") {
+        } else if (POST.equalsIgnoreCase(method)) {
             ((HttpPost) request).setEntity(encoded);
         }
 
@@ -124,42 +124,42 @@ public class ZiggeoConnect {
 
     public InputStream get(String path, JSONObject data) throws IOException,
             JSONException {
-        return this.request("GET", path, data, null);
+        return this.request(GET, path, data, null);
     }
 
     public JSONObject getJSON(String path, JSONObject data) throws IOException,
             JSONException {
-        return this.requestJSON("GET", path, data, null);
+        return this.requestJSON(GET, path, data, null);
     }
 
     public JSONArray getJSONArray(String path, JSONObject data) throws IOException,
             JSONException {
-        return this.requestJSONArray("GET", path, data, null);
+        return this.requestJSONArray(GET, path, data, null);
     }
 
     public JSONArray postJSONArray(String path, JSONObject data, File file) throws IOException,
             JSONException {
-        return this.requestJSONArray("POST", path, data, file);
+        return this.requestJSONArray(GET, path, data, file);
     }
 
     public InputStream post(String path, JSONObject data, File file)
             throws IOException, JSONException {
-        return this.request("POST", path, data, file);
+        return this.request(POST, path, data, file);
     }
 
     public JSONObject postJSON(String path, JSONObject data, File file)
             throws IOException, JSONException {
-        return this.requestJSON("POST", path, data, file);
+        return this.requestJSON(POST, path, data, file);
     }
 
     public InputStream delete(String path, JSONObject data) throws IOException,
             JSONException {
-        return this.request("DELETE", path, data, null);
+        return this.request(DELETE, path, data, null);
     }
 
     public JSONObject deleteJSON(String path, JSONObject data)
             throws IOException, JSONException {
-        return this.requestJSON("DELETE", path, data, null);
+        return this.requestJSON(DELETE, path, data, null);
     }
 
 }
