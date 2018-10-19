@@ -21,7 +21,12 @@ public class ZiggeoApplication {
         return this.application.connect().postJSON("/v1/application", data, null);
     }
 
+    @Deprecated
     public JSONObject get_stats(JSONObject data) throws IOException, JSONException {
+        return getStats(data);
+    }
+
+    public JSONObject getStats(JSONObject data) throws IOException, JSONException {
         return this.application.apiConnect().getJSON("/server/v1/application/stats", data);
     }
 

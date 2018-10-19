@@ -15,28 +15,43 @@ public class ZiggeoMetaProfileProcess {
         this.application = application;
     }
 
-    public JSONArray index(String meta_token_or_key) throws IOException, JSONException {
-        return this.application.connect().getJSONArray("/v1/metaprofiles/" + meta_token_or_key + "/process", null);
+    public JSONArray index(String metaTokenOrKey) throws IOException, JSONException {
+        return this.application.connect().getJSONArray("/v1/metaprofiles/" + metaTokenOrKey + "/process", null);
     }
 
-    public JSONObject get(String meta_token_or_key, String token_or_key) throws IOException, JSONException {
-        return this.application.connect().getJSON("/v1/metaprofiles/" + meta_token_or_key + "/process/" + token_or_key + "", null);
+    public JSONObject get(String metaTokenOrKey, String tokenOrKey) throws IOException, JSONException {
+        return this.application.connect().getJSON("/v1/metaprofiles/" + metaTokenOrKey + "/process/" + tokenOrKey + "", null);
     }
 
-    public InputStream delete(String meta_token_or_key, String token_or_key) throws IOException, JSONException {
-        return this.application.connect().delete("/v1/metaprofiles/" + meta_token_or_key + "/process/" + token_or_key + "", null);
+    public InputStream delete(String metaTokenOrKey, String tokenOrKey) throws IOException, JSONException {
+        return this.application.connect().delete("/v1/metaprofiles/" + metaTokenOrKey + "/process/" + tokenOrKey + "", null);
     }
 
-    public JSONObject create_video_analysis_process(String meta_token_or_key) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/metaprofiles/" + meta_token_or_key + "/process/analysis", null, null);
+    @Deprecated
+    public JSONObject create_video_analysis_process(String metaTokenOrKey) throws IOException, JSONException {
+        return createVideoAnalysisProcess(metaTokenOrKey);
     }
 
-    public JSONObject create_audio_transcription_process(String meta_token_or_key) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/metaprofiles/" + meta_token_or_key + "/process/transcription", null, null);
+    public JSONObject createVideoAnalysisProcess(String metaTokenOrKey) throws IOException, JSONException {
+        return this.application.connect().postJSON("/v1/metaprofiles/" + metaTokenOrKey + "/process/analysis", null, null);
     }
 
-    public JSONObject create_nsfw_process(String meta_token_or_key, JSONObject data) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/metaprofiles/" + meta_token_or_key + "/process/nsfw", data, null);
+    @Deprecated
+    public JSONObject create_audio_transcription_process(String metaTokenOrKey) throws IOException, JSONException {
+        return createAudioTranscriptionProcess(metaTokenOrKey);
+    }
+
+    public JSONObject createAudioTranscriptionProcess(String metaTokenOrKey) throws IOException, JSONException {
+        return this.application.connect().postJSON("/v1/metaprofiles/" + metaTokenOrKey + "/process/transcription", null, null);
+    }
+
+    @Deprecated
+    public JSONObject create_nsfw_process(String metaTokenOrKey, JSONObject data) throws IOException, JSONException {
+        return createNsfwProcess(metaTokenOrKey, data);
+    }
+
+    public JSONObject createNsfwProcess(String metaTokenOrKey, JSONObject data) throws IOException, JSONException {
+        return this.application.connect().postJSON("/v1/metaprofiles/" + metaTokenOrKey + "/process/nsfw", data, null);
     }
 
 }

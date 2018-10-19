@@ -34,12 +34,12 @@ public class ZiggeoAuth {
             NoSuchAlgorithmException, InvalidKeyException,
             NoSuchPaddingException, InvalidAlgorithmParameterException,
             IllegalBlockSizeException, BadPaddingException {
-        data.put("application_token", this.application.token);
-        data.put("nonce", this.generate_nonce());
+        data.put("application_token", this.application.getToken());
+        data.put("nonce", this.generateNonce());
         return this.encrypt(data.toString());
     }
 
-    private String generate_nonce() {
+    private String generateNonce() {
         return System.currentTimeMillis() + ""
                 + Math.floor((Math.random() * (Math.pow(2, 32) - 1)));
     }
@@ -49,7 +49,7 @@ public class ZiggeoAuth {
             InvalidAlgorithmParameterException, IllegalBlockSizeException,
             BadPaddingException {
         MessageDigest md = MessageDigest.getInstance("MD5");
-        md.update(this.application.encryption_key.getBytes());
+        md.update(this.application.getEncryptionKey().getBytes());
         SecretKeySpec skeySpec = new SecretKeySpec(bytesToHex(md.digest()).getBytes(), "AES");
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5padding");
         byte[] iv = new byte[8];

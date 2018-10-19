@@ -7,7 +7,7 @@ class ApplicationStats {
 
     public static void main(String args[]) throws Exception {
         Ziggeo ziggeo = new Ziggeo(args[0], args[1], "");
-        JSONObject stats = ziggeo.application().get_stats(null);
+        JSONObject stats = ziggeo.application().getStats(null);
         System.out.println(stats);
     }
 

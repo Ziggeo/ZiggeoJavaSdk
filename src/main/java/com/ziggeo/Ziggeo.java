@@ -4,9 +4,9 @@ import java.util.Map;
 
 public class Ziggeo {
 
-    public String token;
-    public String private_key;
-    public String encryption_key;
+    private String token;
+    private String privateKey;
+    private String encryptionKey;
     private ZiggeoConfig configObj;
     private ZiggeoConnect connectObj;
     private ZiggeoConnect apiConnectObj;
@@ -22,21 +22,33 @@ public class Ziggeo {
     private ZiggeoWebhooks webhooksObj = null;
     private ZiggeoAnalytics analyticsObj = null;
 
-    public Ziggeo(String token, String private_key, String encryption_key) {
+    public Ziggeo(String token, String privateKey, String encryptionKey) {
         this.token = token;
-        this.private_key = private_key;
-        this.encryption_key = encryption_key;
+        this.privateKey = privateKey;
+        this.encryptionKey = encryptionKey;
         this.configObj = new ZiggeoConfig();
-        String server_api_url = config().server_api_url;
-        for (Map.Entry<String, String> entry : config().regions.entrySet())
+        String serverApiUrl = config().SERVER_API_URL;
+        for (Map.Entry<String, String> entry : config().getRegions().entrySet())
             if (this.token.startsWith(entry.getKey()))
-                server_api_url = entry.getValue();
-        this.connectObj = new ZiggeoConnect(this, server_api_url);
-        String api_url = config().api_url;
-        for (Map.Entry<String, String> entry : config().api_regions.entrySet())
+                serverApiUrl = entry.getValue();
+        this.connectObj = new ZiggeoConnect(this, serverApiUrl);
+        String apiUrl = config().API_URL;
+        for (Map.Entry<String, String> entry : config().getApiRegions().entrySet())
             if (this.token.startsWith(entry.getKey()))
-                api_url = entry.getValue();
-        this.apiConnectObj = new ZiggeoConnect(this, api_url);
+                apiUrl = entry.getValue();
+        this.apiConnectObj = new ZiggeoConnect(this, apiUrl);
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public String getPrivateKey() {
+        return privateKey;
+    }
+
+    public String getEncryptionKey() {
+        return encryptionKey;
     }
 
     public ZiggeoConfig config() {

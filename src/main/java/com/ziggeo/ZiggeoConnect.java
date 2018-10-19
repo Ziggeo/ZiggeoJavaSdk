@@ -69,7 +69,7 @@ public class ZiggeoConnect {
         } else {
             request = new HttpDelete(baseUri + path + "?" + encodedStr);
         }
-        request.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials(this.application.token, this.application.private_key), "UTF-8", false));
+        request.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials(this.application.getToken(), this.application.getPrivateKey()), "UTF-8", false));
 
         if (file != null && POST.equalsIgnoreCase(method)) {
             MultipartEntity mpEntity = new MultipartEntity();

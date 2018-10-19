@@ -16,44 +16,69 @@ public class ZiggeoStreams {
         this.application = application;
     }
 
-    public JSONArray index(String video_token_or_key, JSONObject data) throws IOException, JSONException {
-        return this.application.connect().getJSONArray("/v1/videos/" + video_token_or_key + "/streams", data);
+    public JSONArray index(String videoTokenOrKey, JSONObject data) throws IOException, JSONException {
+        return this.application.connect().getJSONArray("/v1/videos/" + videoTokenOrKey + "/streams", data);
     }
 
-    public JSONObject get(String video_token_or_key, String token_or_key) throws IOException, JSONException {
-        return this.application.connect().getJSON("/v1/videos/" + video_token_or_key + "/streams/" + token_or_key + "", null);
+    public JSONObject get(String videoTokenOrKey, String tokenOrKey) throws IOException, JSONException {
+        return this.application.connect().getJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "", null);
     }
 
-    public InputStream download_video(String video_token_or_key, String token_or_key) throws IOException, JSONException {
-        return this.application.connect().get("/v1/videos/" + video_token_or_key + "/streams/" + token_or_key + "/video", null);
+    @Deprecated
+    public InputStream download_video(String videoTokenOrKey, String tokenOrKey) throws IOException, JSONException {
+        return downloadVideo(videoTokenOrKey, tokenOrKey);
     }
 
-    public InputStream download_image(String video_token_or_key, String token_or_key) throws IOException, JSONException {
-        return this.application.connect().get("/v1/videos/" + video_token_or_key + "/streams/" + token_or_key + "/image", null);
+    public InputStream downloadVideo(String videoTokenOrKey, String tokenOrKey) throws IOException, JSONException {
+        return this.application.connect().get("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "/video", null);
     }
 
-    public JSONObject push_to_service(String video_token_or_key, String token_or_key, JSONObject data) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/videos/" + video_token_or_key + "/streams/" + token_or_key + "/push", data, null);
+    @Deprecated
+    public InputStream download_image(String videoTokenOrKey, String tokenOrKey) throws IOException, JSONException {
+        return downloadImage(videoTokenOrKey, tokenOrKey);
     }
 
-    public InputStream delete(String video_token_or_key, String token_or_key) throws IOException, JSONException {
-        return this.application.connect().delete("/v1/videos/" + video_token_or_key + "/streams/" + token_or_key + "", null);
+    public InputStream downloadImage(String videoTokenOrKey, String tokenOrKey) throws IOException, JSONException {
+        return this.application.connect().get("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "/image", null);
     }
 
-    public JSONObject create(String video_token_or_key, JSONObject data, File file) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/videos/" + video_token_or_key + "/streams", data, file);
+    @Deprecated
+    public JSONObject push_to_service(String videoTokenOrKey, String tokenOrKey, JSONObject data) throws IOException, JSONException {
+        return pushToService(videoTokenOrKey, tokenOrKey, data);
     }
 
-    public JSONObject attach_image(String video_token_or_key, String token_or_key, JSONObject data, File file) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/videos/" + video_token_or_key + "/streams/" + token_or_key + "/image", data, file);
+    public JSONObject pushToService(String videoTokenOrKey, String tokenOrKey, JSONObject data) throws IOException, JSONException {
+        return this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "/push", data, null);
     }
 
-    public JSONObject attach_video(String video_token_or_key, String token_or_key, JSONObject data, File file) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/videos/" + video_token_or_key + "/streams/" + token_or_key + "/video", data, file);
+    public InputStream delete(String videoTokenOrKey, String tokenOrKey) throws IOException, JSONException {
+        return this.application.connect().delete("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "", null);
     }
 
-    public JSONObject bind(String video_token_or_key, String token_or_key) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/videos/" + video_token_or_key + "/streams/" + token_or_key + "/bind", null, null);
+    public JSONObject create(String videoTokenOrKey, JSONObject data, File file) throws IOException, JSONException {
+        return this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams", data, file);
+    }
+
+    @Deprecated
+    public JSONObject attach_image(String videoTokenOrKey, String tokenOrKey, JSONObject data, File file) throws IOException, JSONException {
+        return attachImage(videoTokenOrKey, tokenOrKey, data, file);
+    }
+
+    public JSONObject attachImage(String videoTokenOrKey, String tokenOrKey, JSONObject data, File file) throws IOException, JSONException {
+        return this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "/image", data, file);
+    }
+
+    @Deprecated
+    public JSONObject attach_video(String videoTokenOrKey, String tokenOrKey, JSONObject data, File file) throws IOException, JSONException {
+        return attachVideo(videoTokenOrKey, tokenOrKey, data, file);
+    }
+
+    public JSONObject attachVideo(String videoTokenOrKey, String tokenOrKey, JSONObject data, File file) throws IOException, JSONException {
+        return this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "/video", data, file);
+    }
+
+    public JSONObject bind(String videoTokenOrKey, String tokenOrKey) throws IOException, JSONException {
+        return this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "/bind", null, null);
     }
 
 }

@@ -24,60 +24,105 @@ public class ZiggeoVideos {
         return this.application.connect().getJSON("/v1/videos/count", data);
     }
 
-    public JSONObject get(String token_or_key) throws IOException, JSONException {
-        return this.application.connect().getJSON("/v1/videos/" + token_or_key + "", null);
+    public JSONObject get(String tokenOrKey) throws IOException, JSONException {
+        return this.application.connect().getJSON("/v1/videos/" + tokenOrKey + "", null);
     }
 
+    @Deprecated
     public JSONArray get_bulk(JSONObject data) throws IOException, JSONException {
+        return getBulk(data);
+    }
+
+    public JSONArray getBulk(JSONObject data) throws IOException, JSONException {
         return this.application.connect().postJSONArray("/v1/videos/get_bulk", data, null);
     }
 
+    @Deprecated
     public JSONArray stats_bulk(JSONObject data) throws IOException, JSONException {
+        return statsBulk(data);
+    }
+
+    public JSONArray statsBulk(JSONObject data) throws IOException, JSONException {
         return this.application.connect().postJSONArray("/v1/videos/stats_bulk", data, null);
     }
 
-    public InputStream download_video(String token_or_key) throws IOException, JSONException {
-        return this.application.connect().get("/v1/videos/" + token_or_key + "/video", null);
+    @Deprecated
+    public InputStream download_video(String tokenOrKey) throws IOException, JSONException {
+        return downloadVideo(tokenOrKey);
     }
 
-    public InputStream download_image(String token_or_key) throws IOException, JSONException {
-        return this.application.connect().get("/v1/videos/" + token_or_key + "/image", null);
+    public InputStream downloadVideo(String tokenOrKey) throws IOException, JSONException {
+        return this.application.connect().get("/v1/videos/" + tokenOrKey + "/video", null);
     }
 
-    public JSONObject get_stats(String token_or_key) throws IOException, JSONException {
-        return this.application.connect().getJSON("/v1/videos/" + token_or_key + "/stats", null);
+    @Deprecated
+    public InputStream download_image(String tokenOrKey) throws IOException, JSONException {
+        return downloadImage(tokenOrKey);
     }
 
-    public JSONObject push_to_service(String token_or_key, JSONObject data) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/videos/" + token_or_key + "/push", data, null);
+    public InputStream downloadImage(String tokenOrKey) throws IOException, JSONException {
+        return this.application.connect().get("/v1/videos/" + tokenOrKey + "/image", null);
     }
 
-    public JSONObject apply_effect(String token_or_key, JSONObject data) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/videos/" + token_or_key + "/effect", data, null);
+    @Deprecated
+    public JSONObject get_stats(String tokenOrKey) throws IOException, JSONException {
+        return getStats(tokenOrKey);
     }
 
-    public JSONObject apply_meta(String token_or_key, JSONObject data) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/videos/" + token_or_key + "/metaprofile", data, null);
+    public JSONObject getStats(String tokenOrKey) throws IOException, JSONException {
+        return this.application.connect().getJSON("/v1/videos/" + tokenOrKey + "/stats", null);
     }
 
-    public JSONObject update(String token_or_key, JSONObject data) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/videos/" + token_or_key + "", data, null);
+    @Deprecated
+    public JSONObject push_to_service(String tokenOrKey, JSONObject data) throws IOException, JSONException {
+        return pushToService(tokenOrKey, data);
     }
 
+    public JSONObject pushToService(String tokenOrKey, JSONObject data) throws IOException, JSONException {
+        return this.application.connect().postJSON("/v1/videos/" + tokenOrKey + "/push", data, null);
+    }
+
+    @Deprecated
+    public JSONObject apply_effect(String tokenOrKey, JSONObject data) throws IOException, JSONException {
+        return applyEffect(tokenOrKey, data);
+    }
+
+    public JSONObject applyEffect(String tokenOrKey, JSONObject data) throws IOException, JSONException {
+        return this.application.connect().postJSON("/v1/videos/" + tokenOrKey + "/effect", data, null);
+    }
+
+    @Deprecated
+    public JSONObject apply_meta(String tokenOrKey, JSONObject data) throws IOException, JSONException {
+        return applyMeta(tokenOrKey, data);
+    }
+
+    public JSONObject applyMeta(String tokenOrKey, JSONObject data) throws IOException, JSONException {
+        return this.application.connect().postJSON("/v1/videos/" + tokenOrKey + "/metaprofile", data, null);
+    }
+
+    public JSONObject update(String tokenOrKey, JSONObject data) throws IOException, JSONException {
+        return this.application.connect().postJSON("/v1/videos/" + tokenOrKey + "", data, null);
+    }
+
+    @Deprecated
     public JSONArray update_bulk(JSONObject data) throws IOException, JSONException {
+        return updateBulk(data);
+    }
+
+    public JSONArray updateBulk(JSONObject data) throws IOException, JSONException {
         return this.application.connect().postJSONArray("/v1/videos/update_bulk", data, null);
     }
 
-    public InputStream delete(String token_or_key) throws IOException, JSONException {
-        return this.application.connect().delete("/v1/videos/" + token_or_key + "", null);
+    public InputStream delete(String tokenOrKey) throws IOException, JSONException {
+        return this.application.connect().delete("/v1/videos/" + tokenOrKey + "", null);
     }
 
     public JSONObject create(JSONObject data, File file) throws IOException, JSONException {
         return this.application.connect().postJSON("/v1/videos/", data, file);
     }
 
-    public JSONArray analytics(String token_or_key, JSONObject data) throws IOException, JSONException {
-        return this.application.connect().postJSONArray("/v1/videos/" + token_or_key + "/analytics", data, null);
+    public JSONArray analytics(String tokenOrKey, JSONObject data) throws IOException, JSONException {
+        return this.application.connect().postJSONArray("/v1/videos/" + tokenOrKey + "/analytics", data, null);
     }
 
 }

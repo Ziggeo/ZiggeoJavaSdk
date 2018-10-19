@@ -16,24 +16,34 @@ public class ZiggeoEffectProfileProcess {
         this.application = application;
     }
 
-    public JSONArray index(String effect_token_or_key, JSONObject data) throws IOException, JSONException {
-        return this.application.connect().getJSONArray("/v1/effects/" + effect_token_or_key + "/process", data);
+    public JSONArray index(String effectTokenOrKey, JSONObject data) throws IOException, JSONException {
+        return this.application.connect().getJSONArray("/v1/effects/" + effectTokenOrKey + "/process", data);
     }
 
-    public JSONObject get(String effect_token_or_key, String token_or_key) throws IOException, JSONException {
-        return this.application.connect().getJSON("/v1/effects/" + effect_token_or_key + "/process/" + token_or_key + "", null);
+    public JSONObject get(String effectTokenOrKey, String tokenOrKey) throws IOException, JSONException {
+        return this.application.connect().getJSON("/v1/effects/" + effectTokenOrKey + "/process/" + tokenOrKey + "", null);
     }
 
-    public InputStream delete(String effect_token_or_key, String token_or_key) throws IOException, JSONException {
-        return this.application.connect().delete("/v1/effects/" + effect_token_or_key + "/process/" + token_or_key + "", null);
+    public InputStream delete(String effectTokenOrKey, String tokenOrKey) throws IOException, JSONException {
+        return this.application.connect().delete("/v1/effects/" + effectTokenOrKey + "/process/" + tokenOrKey + "", null);
     }
 
-    public JSONObject create_filter_process(String effect_token_or_key, JSONObject data) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/effects/" + effect_token_or_key + "/process/filter", data, null);
+    @Deprecated
+    public JSONObject create_filter_process(String effectTokenOrKey, JSONObject data) throws IOException, JSONException {
+        return createFilterProcess(effectTokenOrKey, data);
     }
 
-    public JSONObject create_watermark_process(String effect_token_or_key, JSONObject data, File file) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/effects/" + effect_token_or_key + "/process/watermark", data, file);
+    public JSONObject createFilterProcess(String effectTokenOrKey, JSONObject data) throws IOException, JSONException {
+        return this.application.connect().postJSON("/v1/effects/" + effectTokenOrKey + "/process/filter", data, null);
+    }
+
+    @Deprecated
+    public JSONObject create_watermark_process(String effectTokenOrKey, JSONObject data, File file) throws IOException, JSONException {
+        return createWatermarkProcess(effectTokenOrKey, data, file);
+    }
+
+    public JSONObject createWatermarkProcess(String effectTokenOrKey, JSONObject data, File file) throws IOException, JSONException {
+        return this.application.connect().postJSON("/v1/effects/" + effectTokenOrKey + "/process/watermark", data, file);
     }
 
 }

@@ -22,12 +22,12 @@ public class ZiggeoMetaProfiles {
         return this.application.connect().getJSON("/v1/metaprofiles/", data);
     }
 
-    public JSONObject get(String token_or_key) throws IOException, JSONException {
-        return this.application.connect().getJSON("/v1/metaprofiles/" + token_or_key + "", null);
+    public JSONObject get(String tokenOrKey) throws IOException, JSONException {
+        return this.application.connect().getJSON("/v1/metaprofiles/" + tokenOrKey + "", null);
     }
 
-    public InputStream delete(String token_or_key) throws IOException, JSONException {
-        return this.application.connect().delete("/v1/metaprofiles/" + token_or_key + "", null);
+    public InputStream delete(String tokenOrKey) throws IOException, JSONException {
+        return this.application.connect().delete("/v1/metaprofiles/" + tokenOrKey + "", null);
     }
 
 }

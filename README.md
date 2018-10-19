@@ -60,7 +60,7 @@ For the full documentation, please visit [ziggeo.com](https://ziggeo.com/docs).
 You can integrate the Server SDK as follows:
 
 ```java 
-Ziggeo ziggeo = new Ziggeo("*token*", "*private_key*", "*encryption_key*"); 
+Ziggeo ziggeo = new Ziggeo("*token*", "*privateKey*", "*encryptionKey*");
 ```
 
 
@@ -105,7 +105,7 @@ Arguments
 Get a single video by token or key. 
 
 ```java 
-ziggeo.videos().get(String token_or_key) 
+ziggeo.videos().get(String tokenOrKey)
 ``` 
  
 
@@ -115,7 +115,7 @@ ziggeo.videos().get(String token_or_key)
 Get multiple videos by tokens or keys. 
 
 ```java 
-ziggeo.videos().get_bulk(JSONObject arguments) 
+ziggeo.videos().getBulk(JSONObject arguments)
 ``` 
  
 Arguments 
@@ -127,7 +127,7 @@ Arguments
 Get stats for multiple videos by tokens or keys. 
 
 ```java 
-ziggeo.videos().stats_bulk(JSONObject arguments) 
+ziggeo.videos().statsBulk(JSONObject arguments)
 ``` 
  
 Arguments 
@@ -140,7 +140,7 @@ Arguments
 Download the video data file 
 
 ```java 
-ziggeo.videos().download_video(String token_or_key) 
+ziggeo.videos().downloadVideo(String tokenOrKey)
 ``` 
  
 
@@ -150,7 +150,7 @@ ziggeo.videos().download_video(String token_or_key)
 Download the image data file 
 
 ```java 
-ziggeo.videos().download_image(String token_or_key) 
+ziggeo.videos().downloadImage(String tokenOrKey)
 ``` 
  
 
@@ -160,7 +160,7 @@ ziggeo.videos().download_image(String token_or_key)
 Get the video's stats 
 
 ```java 
-ziggeo.videos().get_stats(String token_or_key) 
+ziggeo.videos().getStats(String tokenOrKey)
 ``` 
  
 
@@ -170,7 +170,7 @@ ziggeo.videos().get_stats(String token_or_key)
 Push a video to a provided push service. 
 
 ```java 
-ziggeo.videos().push_to_service(String token_or_key, JSONObject arguments) 
+ziggeo.videos().pushToService(String tokenOrKey, JSONObject arguments)
 ``` 
  
 Arguments 
@@ -182,7 +182,7 @@ Arguments
 Apply an effect profile to a video. 
 
 ```java 
-ziggeo.videos().apply_effect(String token_or_key, JSONObject arguments) 
+ziggeo.videos().applyEffect(String tokenOrKey, JSONObject arguments)
 ``` 
  
 Arguments 
@@ -194,7 +194,7 @@ Arguments
 Apply a meta profile to a video. 
 
 ```java 
-ziggeo.videos().apply_meta(String token_or_key, JSONObject arguments) 
+ziggeo.videos().applyMeta(String tokenOrKey, JSONObject arguments)
 ``` 
  
 Arguments 
@@ -206,7 +206,7 @@ Arguments
 Update single video by token or key. 
 
 ```java 
-ziggeo.videos().update(String token_or_key, JSONObject arguments) 
+ziggeo.videos().update(String tokenOrKey, JSONObject arguments)
 ``` 
  
 Arguments 
@@ -223,7 +223,7 @@ Arguments
 Update multiple videos by token or key. 
 
 ```java 
-ziggeo.videos().update_bulk(JSONObject arguments) 
+ziggeo.videos().updateBulk(JSONObject arguments)
 ``` 
  
 Arguments 
@@ -240,7 +240,7 @@ Arguments
 Delete a single video by token or key. 
 
 ```java 
-ziggeo.videos().delete(String token_or_key) 
+ziggeo.videos().delete(String tokenOrKey)
 ``` 
  
 
@@ -267,7 +267,7 @@ Arguments
 Get analytics for a specific videos with the given params 
 
 ```java 
-ziggeo.videos().analytics(String token_or_key, JSONObject arguments) 
+ziggeo.videos().analytics(String tokenOrKey, JSONObject arguments)
 ``` 
  
 Arguments 
@@ -287,7 +287,7 @@ The streams resource allows you to directly access all streams associated with a
 Return all streams associated with a video 
 
 ```java 
-ziggeo.streams().index(String video_token_or_key, JSONObject arguments) 
+ziggeo.streams().index(String videoTokenOrKey, JSONObject arguments)
 ``` 
  
 Arguments 
@@ -299,7 +299,7 @@ Arguments
 Get a single stream 
 
 ```java 
-ziggeo.streams().get(String video_token_or_key, String token_or_key) 
+ziggeo.streams().get(String videoTokenOrKey, String tokenOrKey)
 ``` 
  
 
@@ -309,7 +309,7 @@ ziggeo.streams().get(String video_token_or_key, String token_or_key)
 Download the video data associated with the stream 
 
 ```java 
-ziggeo.streams().download_video(String video_token_or_key, String token_or_key) 
+ziggeo.streams().downloadVideo(String videoTokenOrKey, String tokenOrKey)
 ``` 
  
 
@@ -319,7 +319,7 @@ ziggeo.streams().download_video(String video_token_or_key, String token_or_key)
 Download the image data associated with the stream 
 
 ```java 
-ziggeo.streams().download_image(String video_token_or_key, String token_or_key) 
+ziggeo.streams().downloadImage(String videoTokenOrKey, String tokenOrKey)
 ``` 
  
 
@@ -329,7 +329,7 @@ ziggeo.streams().download_image(String video_token_or_key, String token_or_key)
 Push a stream to a provided push service. 
 
 ```java 
-ziggeo.streams().push_to_service(String video_token_or_key, String token_or_key, JSONObject arguments) 
+ziggeo.streams().pushToService(String videoTokenOrKey, String tokenOrKey, JSONObject arguments)
 ``` 
  
 Arguments 
@@ -341,7 +341,7 @@ Arguments
 Delete the stream 
 
 ```java 
-ziggeo.streams().delete(String video_token_or_key, String token_or_key) 
+ziggeo.streams().delete(String videoTokenOrKey, String tokenOrKey)
 ``` 
  
 
@@ -351,7 +351,7 @@ ziggeo.streams().delete(String video_token_or_key, String token_or_key)
 Create a new stream 
 
 ```java 
-ziggeo.streams().create(String video_token_or_key, JSONObject arguments, String file) 
+ziggeo.streams().create(String videoTokenOrKey, JSONObject arguments, String file)
 ``` 
  
 Arguments 
@@ -363,7 +363,7 @@ Arguments
 Attaches an image to a new stream 
 
 ```java 
-ziggeo.streams().attach_image(String video_token_or_key, String token_or_key, JSONObject arguments, String file) 
+ziggeo.streams().attachImage(String videoTokenOrKey, String tokenOrKey, JSONObject arguments, String file)
 ``` 
  
 Arguments 
@@ -375,7 +375,7 @@ Arguments
 Attaches a video to a new stream 
 
 ```java 
-ziggeo.streams().attach_video(String video_token_or_key, String token_or_key, JSONObject arguments, String file) 
+ziggeo.streams().attachVideo(String videoTokenOrKey, String tokenOrKey, JSONObject arguments, String file)
 ``` 
  
 Arguments 
@@ -387,7 +387,7 @@ Arguments
 Closes and submits the stream 
 
 ```java 
-ziggeo.streams().bind(String video_token_or_key, String token_or_key, JSONObject arguments) 
+ziggeo.streams().bind(String videoTokenOrKey, String tokenOrKey, JSONObject arguments)
 ``` 
  
 
@@ -412,7 +412,7 @@ ziggeo.authtokens().get(String token)
 Update single auth token by token. 
 
 ```java 
-ziggeo.authtokens().update(String token_or_key, JSONObject arguments) 
+ziggeo.authtokens().update(String tokenOrKey, JSONObject arguments)
 ``` 
  
 Arguments 
@@ -429,7 +429,7 @@ Arguments
 Delete a single auth token by token. 
 
 ```java 
-ziggeo.authtokens().delete(String token_or_key) 
+ziggeo.authtokens().delete(String tokenOrKey)
 ``` 
  
 
@@ -492,7 +492,7 @@ Arguments
 Read application stats 
 
 ```java 
-ziggeo.application().get_stats(JSONObject arguments) 
+ziggeo.application().getStats(JSONObject arguments)
 ``` 
  
 Arguments 
@@ -537,7 +537,7 @@ Arguments
 Get a single effect profile 
 
 ```java 
-ziggeo.effectProfiles().get(String token_or_key) 
+ziggeo.effectProfiles().get(String tokenOrKey)
 ``` 
  
 
@@ -547,7 +547,7 @@ ziggeo.effectProfiles().get(String token_or_key)
 Delete the effect profile 
 
 ```java 
-ziggeo.effectProfiles().delete(String token_or_key) 
+ziggeo.effectProfiles().delete(String tokenOrKey)
 ``` 
  
 
@@ -557,7 +557,7 @@ ziggeo.effectProfiles().delete(String token_or_key)
 Updates an effect profile. 
 
 ```java 
-ziggeo.effectProfiles().update(String token_or_key, JSONObject arguments) 
+ziggeo.effectProfiles().update(String tokenOrKey, JSONObject arguments)
 ``` 
  
 Arguments 
@@ -574,7 +574,7 @@ The process resource allows you to directly access all process associated with a
 Return all processes associated with a effect profile 
 
 ```java 
-ziggeo.effectProfileProcess().index(String effect_token_or_key, JSONObject arguments) 
+ziggeo.effectProfileProcess().index(String effectTokenOrKey, JSONObject arguments)
 ``` 
  
 Arguments 
@@ -586,7 +586,7 @@ Arguments
 Get a single process 
 
 ```java 
-ziggeo.effectProfileProcess().get(String effect_token_or_key, String token_or_key) 
+ziggeo.effectProfileProcess().get(String effectTokenOrKey, String tokenOrKey)
 ``` 
  
 
@@ -596,7 +596,7 @@ ziggeo.effectProfileProcess().get(String effect_token_or_key, String token_or_ke
 Delete the process 
 
 ```java 
-ziggeo.effectProfileProcess().delete(String effect_token_or_key, String token_or_key) 
+ziggeo.effectProfileProcess().delete(String effectTokenOrKey, String tokenOrKey)
 ``` 
  
 
@@ -606,7 +606,7 @@ ziggeo.effectProfileProcess().delete(String effect_token_or_key, String token_or
 Create a new filter effect process 
 
 ```java 
-ziggeo.effectProfileProcess().create_filter_process(String effect_token_or_key, JSONObject arguments) 
+ziggeo.effectProfileProcess().createFilterProcess(String effectTokenOrKey, JSONObject arguments)
 ``` 
  
 Arguments 
@@ -618,7 +618,7 @@ Arguments
 Attaches an image to a new stream 
 
 ```java 
-ziggeo.effectProfileProcess().create_watermark_process(String effect_token_or_key, JSONObject arguments, String file) 
+ziggeo.effectProfileProcess().createWatermarkProcess(String effectTokenOrKey, JSONObject arguments, String file)
 ``` 
  
 Arguments 
@@ -665,7 +665,7 @@ Arguments
 Get a single meta profile 
 
 ```java 
-ziggeo.metaProfiles().get(String token_or_key) 
+ziggeo.metaProfiles().get(String tokenOrKey)
 ``` 
  
 
@@ -675,7 +675,7 @@ ziggeo.metaProfiles().get(String token_or_key)
 Delete the meta profile 
 
 ```java 
-ziggeo.metaProfiles().delete(String token_or_key) 
+ziggeo.metaProfiles().delete(String tokenOrKey)
 ``` 
  
 
@@ -690,7 +690,7 @@ The process resource allows you to directly access all process associated with a
 Return all processes associated with a meta profile 
 
 ```java 
-ziggeo.metaProfileProcess().index(String meta_token_or_key) 
+ziggeo.metaProfileProcess().index(String metaTokenOrKey)
 ``` 
  
 
@@ -700,7 +700,7 @@ ziggeo.metaProfileProcess().index(String meta_token_or_key)
 Get a single process 
 
 ```java 
-ziggeo.metaProfileProcess().get(String meta_token_or_key, String token_or_key) 
+ziggeo.metaProfileProcess().get(String metaTokenOrKey, String tokenOrKey)
 ``` 
  
 
@@ -710,7 +710,7 @@ ziggeo.metaProfileProcess().get(String meta_token_or_key, String token_or_key)
 Delete the process 
 
 ```java 
-ziggeo.metaProfileProcess().delete(String meta_token_or_key, String token_or_key) 
+ziggeo.metaProfileProcess().delete(String metaTokenOrKey, String tokenOrKey)
 ``` 
  
 
@@ -720,7 +720,7 @@ ziggeo.metaProfileProcess().delete(String meta_token_or_key, String token_or_key
 Create a new video analysis meta process 
 
 ```java 
-ziggeo.metaProfileProcess().create_video_analysis_process(String meta_token_or_key) 
+ziggeo.metaProfileProcess().createVideoAnalysisProcess(String metaTokenOrKey)
 ``` 
  
 
@@ -730,7 +730,7 @@ ziggeo.metaProfileProcess().create_video_analysis_process(String meta_token_or_k
 Create a new audio transcription meta process 
 
 ```java 
-ziggeo.metaProfileProcess().create_audio_transcription_process(String meta_token_or_key) 
+ziggeo.metaProfileProcess().createAudioTranscriptionProcess(String metaTokenOrKey)
 ``` 
  
 
@@ -740,7 +740,7 @@ ziggeo.metaProfileProcess().create_audio_transcription_process(String meta_token
 Create a new nsfw filter meta process 
 
 ```java 
-ziggeo.metaProfileProcess().create_nsfw_process(String meta_token_or_key, JSONObject arguments) 
+ziggeo.metaProfileProcess().createNsfwProcess(String metaTokenOrKey, JSONObject arguments)
 ``` 
  
 Arguments 

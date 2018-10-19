@@ -22,16 +22,16 @@ public class ZiggeoEffectProfiles {
         return this.application.connect().getJSON("/v1/effects/", data);
     }
 
-    public JSONObject get(String token_or_key) throws IOException, JSONException {
-        return this.application.connect().getJSON("/v1/effects/" + token_or_key + "", null);
+    public JSONObject get(String tokenOrKey) throws IOException, JSONException {
+        return this.application.connect().getJSON("/v1/effects/" + tokenOrKey + "", null);
     }
 
-    public InputStream delete(String token_or_key) throws IOException, JSONException {
-        return this.application.connect().delete("/v1/effects/" + token_or_key + "", null);
+    public InputStream delete(String tokenOrKey) throws IOException, JSONException {
+        return this.application.connect().delete("/v1/effects/" + tokenOrKey + "", null);
     }
 
-    public JSONObject update(String token_or_key, JSONObject data) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/effects/" + token_or_key + "", data, null);
+    public JSONObject update(String tokenOrKey, JSONObject data) throws IOException, JSONException {
+        return this.application.connect().postJSON("/v1/effects/" + tokenOrKey + "", data, null);
     }
 
 }
