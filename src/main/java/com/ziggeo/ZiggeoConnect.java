@@ -1,78 +1,86 @@
 package com.ziggeo;
 
+import org.apache.http.*;
+import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.config.RequestConfig;
-import org.json.*;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.ContentBody;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.auth.BasicScheme;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.CoreProtocolPNames;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.*;
-import java.util.*;
-import java.net.*;
-
-import org.apache.http.*;
-import org.apache.http.auth.*;
-import org.apache.http.impl.auth.*;
-import org.apache.http.client.methods.*;
-import org.apache.http.entity.mime.*;
-import org.apache.http.entity.mime.content.*;
-import org.apache.http.impl.client.*;
-import org.apache.http.params.*;
-import org.apache.http.message.*;
-import org.apache.http.client.entity.*;
+import java.net.URLEncoder;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 public class ZiggeoConnect {
 
-	private Ziggeo application;
-	private String baseUri;
+    private Ziggeo application;
+    private String baseUri;
 
-	public ZiggeoConnect(Ziggeo application, String baseUri) {
-		this.application = application;
-		this.baseUri = baseUri;
-	}
+    public ZiggeoConnect(Ziggeo application, String baseUri) {
+        this.application = application;
+        this.baseUri = baseUri;
+    }
 
-	public InputStream request(String method, String path, JSONObject data,
-			File file) throws IOException, JSONException {
-		DefaultHttpClient httpclient = new DefaultHttpClient();
-		httpclient.getParams().setParameter(
-				CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
+    public InputStream request(String method, String path, JSONObject data,
+                               File file) throws IOException, JSONException {
+        DefaultHttpClient httpclient = new DefaultHttpClient();
+        httpclient.getParams().setParameter(
+                CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
 
-		HttpRequestBase request = null;
+        HttpRequestBase request = null;
 
-		List<NameValuePair> nvps = new LinkedList<NameValuePair>();
-		String encodedStr = "";
-		if (data != null) {
-			Iterator<String> keys = data.keys();
-			while (keys.hasNext()) {
-                                String key = keys.next();
-                                String value = data.get(key).toString();
-                                nvps.add(new BasicNameValuePair(key, value));
-                                encodedStr += key + "=" +
-                                        URLEncoder.encode(value) + "&";
-			}
-		}
-		UrlEncodedFormEntity encoded = new UrlEncodedFormEntity(nvps,
-				Consts.UTF_8);
+        List<NameValuePair> nvps = new LinkedList<NameValuePair>();
+        String encodedStr = "";
+        if (data != null) {
+            Iterator<String> keys = data.keys();
+            while (keys.hasNext()) {
+                String key = keys.next();
+                String value = data.get(key).toString();
+                nvps.add(new BasicNameValuePair(key, value));
+                encodedStr += key + "=" +
+                        URLEncoder.encode(value) + "&";
+            }
+        }
+        UrlEncodedFormEntity encoded = new UrlEncodedFormEntity(nvps,
+                Consts.UTF_8);
 
-		if (method.toUpperCase() == "GET")
-			request = new HttpGet(baseUri
-					+ path + "?" + encodedStr);
-		else if (method.toUpperCase() == "POST")
-			request = new HttpPost(baseUri
-					+ path);
-		else
-			request = new HttpDelete(baseUri
-					+ path + "?" + encodedStr);
+        if (method.toUpperCase() == "GET")
+            request = new HttpGet(baseUri
+                    + path + "?" + encodedStr);
+        else if (method.toUpperCase() == "POST")
+            request = new HttpPost(baseUri
+                    + path);
+        else
+            request = new HttpDelete(baseUri
+                    + path + "?" + encodedStr);
 
         request.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials(this.application.token, this.application.private_key), "UTF-8", false));
 
-		if (file != null && method.toUpperCase() == "POST") {
-			MultipartEntity mpEntity = new MultipartEntity();
-			for (NameValuePair nv : nvps)
-				mpEntity.addPart(nv.getName(), new StringBody(nv.getValue()));
-			ContentBody cbFile = new FileBody(file, "video");
-			mpEntity.addPart("file", cbFile);
-			((HttpPost) request).setEntity(mpEntity);
-		} else if (method.toUpperCase() == "POST") {
-			((HttpPost) request).setEntity(encoded);
-		}
+        if (file != null && method.toUpperCase() == "POST") {
+            MultipartEntity mpEntity = new MultipartEntity();
+            for (NameValuePair nv : nvps)
+                mpEntity.addPart(nv.getName(), new StringBody(nv.getValue()));
+            ContentBody cbFile = new FileBody(file, "video");
+            mpEntity.addPart("file", cbFile);
+            ((HttpPost) request).setEntity(mpEntity);
+        } else if (method.toUpperCase() == "POST") {
+            ((HttpPost) request).setEntity(encoded);
+        }
 
         RequestConfig config = RequestConfig.custom()
                 .setSocketTimeout(application.config().getSocketTimeout())
@@ -83,75 +91,75 @@ public class ZiggeoConnect {
         HttpResponse response = httpclient.execute(request);
         HttpEntity resEntity = response.getEntity();
 
-		// httpclient.getConnectionManager().shutdown();
-		return resEntity.getContent();
-	}
+        // httpclient.getConnectionManager().shutdown();
+        return resEntity.getContent();
+    }
 
-	public String requestString(String method, String path, JSONObject data,
-			File file) throws IOException, JSONException {
-		InputStream inputStream = this.request(method, path, data, file);
+    public String requestString(String method, String path, JSONObject data,
+                                File file) throws IOException, JSONException {
+        InputStream inputStream = this.request(method, path, data, file);
 
-		StringBuilder inputStringBuilder = new StringBuilder();
-		BufferedReader bufferedReader = new BufferedReader(
-				new InputStreamReader(inputStream, "UTF-8"));
-		String line = bufferedReader.readLine();
-		while (line != null) {
-			inputStringBuilder.append(line);
-			inputStringBuilder.append('\n');
-			line = bufferedReader.readLine();
-		}
+        StringBuilder inputStringBuilder = new StringBuilder();
+        BufferedReader bufferedReader = new BufferedReader(
+                new InputStreamReader(inputStream, "UTF-8"));
+        String line = bufferedReader.readLine();
+        while (line != null) {
+            inputStringBuilder.append(line);
+            inputStringBuilder.append('\n');
+            line = bufferedReader.readLine();
+        }
 
-		return inputStringBuilder.toString();
-	}
+        return inputStringBuilder.toString();
+    }
 
-	public JSONObject requestJSON(String method, String path, JSONObject data,
-			File file) throws IOException, JSONException {
-		return new JSONObject(this.requestString(method, path, data, file));
-	}
+    public JSONObject requestJSON(String method, String path, JSONObject data,
+                                  File file) throws IOException, JSONException {
+        return new JSONObject(this.requestString(method, path, data, file));
+    }
 
-	public JSONArray requestJSONArray(String method, String path, JSONObject data,
-			File file) throws IOException, JSONException {
-		return new JSONArray(this.requestString(method, path, data, file));
-	}
+    public JSONArray requestJSONArray(String method, String path, JSONObject data,
+                                      File file) throws IOException, JSONException {
+        return new JSONArray(this.requestString(method, path, data, file));
+    }
 
-	public InputStream get(String path, JSONObject data) throws IOException,
-			JSONException {
-		return this.request("GET", path, data, null);
-	}
+    public InputStream get(String path, JSONObject data) throws IOException,
+            JSONException {
+        return this.request("GET", path, data, null);
+    }
 
-	public JSONObject getJSON(String path, JSONObject data) throws IOException,
-			JSONException {
-		return this.requestJSON("GET", path, data, null);
-	}
+    public JSONObject getJSON(String path, JSONObject data) throws IOException,
+            JSONException {
+        return this.requestJSON("GET", path, data, null);
+    }
 
-	public JSONArray getJSONArray(String path, JSONObject data) throws IOException,
-			JSONException {
-		return this.requestJSONArray("GET", path, data, null);
-	}
+    public JSONArray getJSONArray(String path, JSONObject data) throws IOException,
+            JSONException {
+        return this.requestJSONArray("GET", path, data, null);
+    }
 
-	public JSONArray postJSONArray(String path, JSONObject data, File file) throws IOException,
-			JSONException {
-		return this.requestJSONArray("POST", path, data, file);
-	}
+    public JSONArray postJSONArray(String path, JSONObject data, File file) throws IOException,
+            JSONException {
+        return this.requestJSONArray("POST", path, data, file);
+    }
 
-	public InputStream post(String path, JSONObject data, File file)
-			throws IOException, JSONException {
-		return this.request("POST", path, data, file);
-	}
+    public InputStream post(String path, JSONObject data, File file)
+            throws IOException, JSONException {
+        return this.request("POST", path, data, file);
+    }
 
-	public JSONObject postJSON(String path, JSONObject data, File file)
-			throws IOException, JSONException {
-		return this.requestJSON("POST", path, data, file);
-	}
+    public JSONObject postJSON(String path, JSONObject data, File file)
+            throws IOException, JSONException {
+        return this.requestJSON("POST", path, data, file);
+    }
 
-	public InputStream delete(String path, JSONObject data) throws IOException,
-			JSONException {
-		return this.request("DELETE", path, data, null);
-	}
+    public InputStream delete(String path, JSONObject data) throws IOException,
+            JSONException {
+        return this.request("DELETE", path, data, null);
+    }
 
-	public JSONObject deleteJSON(String path, JSONObject data)
-			throws IOException, JSONException {
-		return this.requestJSON("DELETE", path, data, null);
-	}
+    public JSONObject deleteJSON(String path, JSONObject data)
+            throws IOException, JSONException {
+        return this.requestJSON("DELETE", path, data, null);
+    }
 
 }
