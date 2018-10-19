@@ -1,5 +1,7 @@
 package com.ziggeo;
 
+import com.sun.istack.internal.NotNull;
+import com.sun.istack.internal.Nullable;
 import org.apache.http.*;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.config.RequestConfig;
@@ -39,8 +41,8 @@ public class ZiggeoConnect {
         this.baseUri = baseUri;
     }
 
-    public InputStream request(String method, String path, JSONObject data,
-                               File file) throws IOException, JSONException {
+    public InputStream request(@NotNull String method, @NotNull String path, @Nullable JSONObject data,
+                               @Nullable File file) throws IOException, JSONException {
         DefaultHttpClient httpclient = new DefaultHttpClient();
         httpclient.getParams().setParameter(
                 CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
@@ -95,8 +97,8 @@ public class ZiggeoConnect {
         return resEntity.getContent();
     }
 
-    public String requestString(String method, String path, JSONObject data,
-                                File file) throws IOException, JSONException {
+    public String requestString(@NotNull String method, @NotNull String path, @Nullable JSONObject data,
+                                @Nullable File file) throws IOException, JSONException {
         InputStream inputStream = this.request(method, path, data, file);
 
         StringBuilder inputStringBuilder = new StringBuilder();
@@ -112,52 +114,52 @@ public class ZiggeoConnect {
         return inputStringBuilder.toString();
     }
 
-    public JSONObject requestJSON(String method, String path, JSONObject data,
-                                  File file) throws IOException, JSONException {
+    public JSONObject requestJSON(@NotNull String method, @NotNull String path, @Nullable JSONObject data,
+                                  @Nullable File file) throws IOException, JSONException {
         return new JSONObject(this.requestString(method, path, data, file));
     }
 
-    public JSONArray requestJSONArray(String method, String path, JSONObject data,
-                                      File file) throws IOException, JSONException {
+    public JSONArray requestJSONArray(@NotNull String method, @NotNull String path, @Nullable JSONObject data,
+                                      @Nullable File file) throws IOException, JSONException {
         return new JSONArray(this.requestString(method, path, data, file));
     }
 
-    public InputStream get(String path, JSONObject data) throws IOException,
+    public InputStream get(@NotNull String path, @Nullable JSONObject data) throws IOException,
             JSONException {
         return this.request(GET, path, data, null);
     }
 
-    public JSONObject getJSON(String path, JSONObject data) throws IOException,
+    public JSONObject getJSON(@NotNull String path, @Nullable JSONObject data) throws IOException,
             JSONException {
         return this.requestJSON(GET, path, data, null);
     }
 
-    public JSONArray getJSONArray(String path, JSONObject data) throws IOException,
+    public JSONArray getJSONArray(@NotNull String path, @Nullable JSONObject data) throws IOException,
             JSONException {
         return this.requestJSONArray(GET, path, data, null);
     }
 
-    public JSONArray postJSONArray(String path, JSONObject data, File file) throws IOException,
+    public JSONArray postJSONArray(@NotNull String path, @Nullable JSONObject data, @Nullable File file) throws IOException,
             JSONException {
         return this.requestJSONArray(GET, path, data, file);
     }
 
-    public InputStream post(String path, JSONObject data, File file)
+    public InputStream post(@NotNull String path, @Nullable JSONObject data, @Nullable File file)
             throws IOException, JSONException {
         return this.request(POST, path, data, file);
     }
 
-    public JSONObject postJSON(String path, JSONObject data, File file)
+    public JSONObject postJSON(@NotNull String path, @Nullable JSONObject data, @Nullable File file)
             throws IOException, JSONException {
         return this.requestJSON(POST, path, data, file);
     }
 
-    public InputStream delete(String path, JSONObject data) throws IOException,
+    public InputStream delete(@NotNull String path, @Nullable JSONObject data) throws IOException,
             JSONException {
         return this.request(DELETE, path, data, null);
     }
 
-    public JSONObject deleteJSON(String path, JSONObject data)
+    public JSONObject deleteJSON(@NotNull String path, @Nullable JSONObject data)
             throws IOException, JSONException {
         return this.requestJSON(DELETE, path, data, null);
     }
