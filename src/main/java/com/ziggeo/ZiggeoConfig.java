@@ -1,3 +1,4 @@
+
 package com.ziggeo;
 
 import java.util.HashMap;
@@ -14,10 +15,10 @@ public class ZiggeoConfig {
 
     public ZiggeoConfig() {
         regions = new HashMap<String, String>();
-        regions.put("r1", "https://srvapi-eu-west-1.ziggeo.com");
-        apiRegions = new HashMap<String, String>();
-        apiRegions.put("r1", "https://api-eu-west-1.ziggeo.com");
-    }
+                    regions.put("r1", "https://srvapi-eu-west-1.ziggeo.com");
+                apiRegions = new HashMap<String, String>();
+                    apiRegions.put("r1", "https://api-eu-west-1.ziggeo.com");
+            }
 
     public int getConnectionTimeout() {
         return connectionTimeout;
@@ -42,4 +43,5 @@ public class ZiggeoConfig {
     public Map<String, String> getApiRegions() {
         return apiRegions;
     }
+
 }

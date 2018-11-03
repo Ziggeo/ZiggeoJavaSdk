@@ -1,9 +1,11 @@
 package com.ziggeo;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class ZiggeoApplication {
 
@@ -19,11 +21,6 @@ public class ZiggeoApplication {
 
     public JSONObject update(JSONObject data) throws IOException, JSONException {
         return this.application.connect().postJSON("/v1/application", data, null);
-    }
-
-    @Deprecated
-    public JSONObject get_stats(JSONObject data) throws IOException, JSONException {
-        return getStats(data);
     }
 
     public JSONObject getStats(JSONObject data) throws IOException, JSONException {

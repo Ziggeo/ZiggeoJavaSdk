@@ -3,7 +3,6 @@ package com.ziggeo;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,18 +27,8 @@ public class ZiggeoEffectProfileProcess {
         return this.application.connect().delete("/v1/effects/" + effectTokenOrKey + "/process/" + tokenOrKey + "", null);
     }
 
-    @Deprecated
-    public JSONObject create_filter_process(String effectTokenOrKey, JSONObject data) throws IOException, JSONException {
-        return createFilterProcess(effectTokenOrKey, data);
-    }
-
     public JSONObject createFilterProcess(String effectTokenOrKey, JSONObject data) throws IOException, JSONException {
         return this.application.connect().postJSON("/v1/effects/" + effectTokenOrKey + "/process/filter", data, null);
-    }
-
-    @Deprecated
-    public JSONObject create_watermark_process(String effectTokenOrKey, JSONObject data, File file) throws IOException, JSONException {
-        return createWatermarkProcess(effectTokenOrKey, data, file);
     }
 
     public JSONObject createWatermarkProcess(String effectTokenOrKey, JSONObject data, File file) throws IOException, JSONException {
