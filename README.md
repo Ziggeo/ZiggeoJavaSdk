@@ -1,4 +1,4 @@
-# Ziggeo Java Server SDK 0.1.9
+# Ziggeo Java Server SDK 0.1.11
 
 Ziggeo API (https://ziggeo.com) allows you to integrate video recording and playback with only
 two lines of code in your site, service or app. This is the Java Server SDK repository.
