@@ -19,6 +19,10 @@ public class ZiggeoWebhooks {
         return this.application.connect().post("/v1/api/hook", data, null);
     }
 
+    public InputStream confirm(JSONObject data) throws IOException, JSONException {
+        return this.application.connect().post("/v1/api/confirmhook", data, null);
+    }
+
     public InputStream delete(JSONObject data) throws IOException, JSONException {
         return this.application.connect().post("/v1/api/removehook", data, null);
     }
