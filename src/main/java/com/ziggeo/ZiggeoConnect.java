@@ -1,27 +1,33 @@
 package com.ziggeo;
 
-import org.apache.http.*;
+import org.apache.http.Consts;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.auth.AuthenticationException;
 import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.ContentBody;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.auth.BasicScheme;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.CoreProtocolPNames;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -41,13 +47,10 @@ public class ZiggeoConnect {
 
     public InputStream request(String method, String path, JSONObject data,
                                File file) throws IOException, JSONException {
-        DefaultHttpClient httpclient = new DefaultHttpClient();
-        httpclient.getParams().setParameter(
-                CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
+        HttpClient httpClient = HttpClientBuilder.create().build();
+        HttpRequestBase request;
 
-        HttpRequestBase request = null;
-
-        List<NameValuePair> nvps = new LinkedList<NameValuePair>();
+        List<NameValuePair> nvps = new LinkedList<>();
         String encodedStr = "";
         if (data != null) {
             Iterator<String> keys = data.keys();
@@ -56,7 +59,7 @@ public class ZiggeoConnect {
                 String value = data.get(key).toString();
                 nvps.add(new BasicNameValuePair(key, value));
                 encodedStr += key + "=" +
-                        URLEncoder.encode(value) + "&";
+                        URLEncoder.encode(value, "UTF-8") + "&";
             }
         }
         UrlEncodedFormEntity encoded = new UrlEncodedFormEntity(nvps,
@@ -69,15 +72,23 @@ public class ZiggeoConnect {
         } else {
             request = new HttpDelete(baseUri + path + "?" + encodedStr);
         }
-        request.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials(this.application.getToken(), this.application.getPrivateKey()), "UTF-8", false));
+        try {
+            request.addHeader(new BasicScheme(StandardCharsets.UTF_8).authenticate(new
+                    UsernamePasswordCredentials(this.application.getToken(), this
+                    .application.getPrivateKey()), request, null));
+        } catch (AuthenticationException e) {
+            throw new RuntimeException("Could not create auth header!", e);
+        }
 
         if (file != null && POST.equalsIgnoreCase(method)) {
-            MultipartEntity mpEntity = new MultipartEntity();
+            MultipartEntityBuilder mpBuilder = MultipartEntityBuilder.create();
             for (NameValuePair nv : nvps)
-                mpEntity.addPart(nv.getName(), new StringBody(nv.getValue()));
-            ContentBody cbFile = new FileBody(file, "video");
-            mpEntity.addPart("file", cbFile);
-            ((HttpPost) request).setEntity(mpEntity);
+                mpBuilder.addPart(nv.getName(), new StringBody(nv.getValue(),
+                        ContentType.TEXT_PLAIN));
+            ContentBody cbFile = new FileBody(file, ContentType.create
+                    ("video", StandardCharsets.UTF_8), file.getName());
+            mpBuilder.addPart("file", cbFile);
+            ((HttpPost) request).setEntity(mpBuilder.build());
         } else if (POST.equalsIgnoreCase(method)) {
             ((HttpPost) request).setEntity(encoded);
         }
@@ -88,7 +99,7 @@ public class ZiggeoConnect {
                 .build();
         request.setConfig(config);
 
-        HttpResponse response = httpclient.execute(request);
+        HttpResponse response = httpClient.execute(request);
         HttpEntity resEntity = response.getEntity();
 
         // httpclient.getConnectionManager().shutdown();
