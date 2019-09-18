@@ -51,6 +51,10 @@ public class ZiggeoStreams {
         return this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "/video", data, file);
     }
 
+    public JSONObject attachSubtitle(String videoTokenOrKey, String tokenOrKey, JSONObject data) throws IOException, JSONException {
+        return this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "/subtitle", data, null);
+    }
+
     public JSONObject bind(String videoTokenOrKey, String tokenOrKey) throws IOException, JSONException {
         return this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "/bind", null, null);
     }

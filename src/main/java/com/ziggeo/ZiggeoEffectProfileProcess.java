@@ -35,5 +35,9 @@ public class ZiggeoEffectProfileProcess {
         return this.application.connect().postJSON("/v1/effects/" + effectTokenOrKey + "/process/watermark", data, file);
     }
 
+    public JSONObject editWatermarkProcess(String effectTokenOrKey, String tokenOrKey, JSONObject data, File file) throws IOException, JSONException {
+        return this.application.connect().postJSON("/v1/effects/" + effectTokenOrKey + "/process/watermark/" + tokenOrKey + "", data, file);
+    }
+
 }
 

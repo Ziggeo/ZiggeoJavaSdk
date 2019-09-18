@@ -1,4 +1,4 @@
-# Ziggeo Java Server SDK 0.1.15
+# Ziggeo Java Server SDK 0.1.17
 
 Ziggeo API (https://ziggeo.com) allows you to integrate video recording and playback with only
 two lines of code in your site, service or app. This is the Java Server SDK repository.
@@ -382,6 +382,20 @@ Arguments
 - file: *Video file to be attached* 
 
 
+#### Attach Subtitle 
+ 
+Attaches a video to a new stream 
+
+```java 
+ziggeo.streams().attachSubtitle(String videoTokenOrKey, String tokenOrKey, JSONObject arguments) 
+``` 
+ 
+Arguments 
+- lang: *Subtitle language* 
+- label: *Subtitle reference* 
+- data: *Actual subtitle* 
+
+
 #### Bind 
  
 Closes and submits the stream 
@@ -618,6 +632,21 @@ Attaches an image to a new stream
 
 ```java 
 ziggeo.effectProfileProcess().createWatermarkProcess(String effectTokenOrKey, JSONObject arguments, String file) 
+``` 
+ 
+Arguments 
+- file: *Image file to be attached* 
+- vertical_position: *Specify the vertical position of your watermark (a value between 0.0 and 1.0)* 
+- horizontal_position: *Specify the horizontal position of your watermark (a value between 0.0 and 1.0)* 
+- video_scale: *Specify the image scale of your watermark (a value between 0.0 and 1.0)* 
+
+
+#### Edit Watermark Process 
+ 
+Edits an existing watermark process. 
+
+```java 
+ziggeo.effectProfileProcess().editWatermarkProcess(String effectTokenOrKey, String tokenOrKey, JSONObject arguments, String file) 
 ``` 
  
 Arguments 
