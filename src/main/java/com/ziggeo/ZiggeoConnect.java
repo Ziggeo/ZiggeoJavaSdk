@@ -33,6 +33,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ZiggeoConnect {
+    private static final int SERVER_ERROR = 500;
+
     private static final String POST = "POST";
     private static final String GET = "GET";
     private static final String DELETE = "DELETE";
@@ -47,6 +49,29 @@ public class ZiggeoConnect {
 
     public InputStream request(String method, String path, JSONObject data,
                                File file) throws IOException, JSONException {
+        final int tryCount = 5;
+        HttpResponse response = null;
+        for (int i = 0; i < tryCount; i++) {
+            try {
+                response = singleRequest(method, path, data, file);
+                if (response.getStatusLine().getStatusCode() < SERVER_ERROR) {
+                    break;
+                }
+            } catch (Exception e) {
+                System.out.println(e.toString());
+            }
+        }
+
+        InputStream is = null;
+        if (response != null) {
+            HttpEntity resEntity = response.getEntity();
+            is = resEntity.getContent();
+        }
+        return is;
+    }
+
+    private HttpResponse singleRequest(String method, String path, JSONObject data,
+                                       File file) throws IOException, JSONException {
         HttpClient httpClient = HttpClientBuilder.create().build();
         HttpRequestBase request;
 
@@ -98,12 +123,7 @@ public class ZiggeoConnect {
                 .setConnectTimeout(application.config().getConnectionTimeout())
                 .build();
         request.setConfig(config);
-
-        HttpResponse response = httpClient.execute(request);
-        HttpEntity resEntity = response.getEntity();
-
-        // httpclient.getConnectionManager().shutdown();
-        return resEntity.getContent();
+        return httpClient.execute(request);
     }
 
     public String requestString(String method, String path, JSONObject data,
@@ -172,5 +192,4 @@ public class ZiggeoConnect {
             throws IOException, JSONException {
         return this.requestJSON(DELETE, path, data, null);
     }
-
 }
