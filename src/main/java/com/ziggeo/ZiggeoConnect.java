@@ -185,6 +185,28 @@ public class ZiggeoConnect {
         return this.request(POST, path, data, file);
     }
 
+    public JSONObject postUploadJSON(String path, String scope, JSONObject data, File file, String typeKey)
+            throws IOException {
+        if (typeKey != null) {
+            data.put(typeKey, FilenameUtils.getExtension(file.getName()));
+        }
+        JSONObject resp = this.postJSON(path, data);
+        JSONObject ret = resp.getJSONObject(scope);
+        JSONObject urlData = resp.getJSONObject("url_data").getJSONObject("fields");
+        this.request(POST, resp.getJSONObject("url_data").getString("url"), urlData, file);
+        return ret;
+    }
+
+    public JSONObject postJSON(String path)
+            throws IOException, JSONException {
+        return this.requestJSON(POST, path, null, null);
+    }
+
+    public JSONObject postJSON(String path, JSONObject data)
+            throws IOException, JSONException {
+        return this.requestJSON(POST, path, data, null);
+    }
+
     public JSONObject postJSON(String path, JSONObject data, File file)
             throws IOException, JSONException {
         return this.requestJSON(POST, path, data, file);

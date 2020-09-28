@@ -41,15 +41,33 @@ public class ZiggeoStreams {
     }
 
     public JSONObject create(String videoTokenOrKey, JSONObject data, File file) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams", data, file);
+        if (file != null) {
+            JSONObject result = this.application.connect().postUploadJSON("/v1/videos/" + videoTokenOrKey + "/streams-upload-url/", "stream", data, file, "video_type");
+            JSONObject streamResult = this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + result.getString("token") + "/confirm-video");
+            return streamResult;
+        } else {
+            return this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/", data, file);
+        }
     }
 
     public JSONObject attachImage(String videoTokenOrKey, String tokenOrKey, JSONObject data, File file) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "/image", data, file);
+        if (file != null) {
+            JSONObject result = this.application.connect().postUploadJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "/image-upload-url", "stream", data, file, null);
+            JSONObject streamResult = this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + result.getString("token") + "/confirm-image");
+            return streamResult;
+        } else {
+            return this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "/image", data, file);
+        }
     }
 
     public JSONObject attachVideo(String videoTokenOrKey, String tokenOrKey, JSONObject data, File file) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "/video", data, file);
+        if (file != null) {
+            JSONObject result = this.application.connect().postUploadJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "/video-upload-url", "stream", data, file, "video_type");
+            JSONObject streamResult = this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + result.getString("token") + "/confirm-video");
+            return streamResult;
+        } else {
+            return this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "/video", data, file);
+        }
     }
 
     public JSONObject attachSubtitle(String videoTokenOrKey, String tokenOrKey, JSONObject data) throws IOException, JSONException {

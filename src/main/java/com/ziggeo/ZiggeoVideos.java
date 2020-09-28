@@ -73,7 +73,14 @@ public class ZiggeoVideos {
     }
 
     public JSONObject create(JSONObject data, File file) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/videos/", data, file);
+        if (file != null) {
+            JSONObject result = this.application.connect().postUploadJSON("/v1/videos-upload-url/", "video", data, file, "video_type");
+            result.put("default_stream", this.application.connect().postJSON("/v1/videos/" + result.getString("token")
+                    + "/streams/" + result.getJSONObject("default_stream").getJSONObject("token") + "/confirm-video"));
+            return result;
+        } else {
+            return this.application.connect().postJSON("/v1/videos/", data, file);
+        }
     }
 
     public JSONArray analytics(String tokenOrKey, JSONObject data) throws IOException, JSONException {
