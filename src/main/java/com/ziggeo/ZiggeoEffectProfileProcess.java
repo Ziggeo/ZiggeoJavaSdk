@@ -10,7 +10,7 @@ import java.io.InputStream;
 
 public class ZiggeoEffectProfileProcess {
 
-    private Ziggeo application;
+    private final Ziggeo application;
 
     public ZiggeoEffectProfileProcess(Ziggeo application) {
         this.application = application;

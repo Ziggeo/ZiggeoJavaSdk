@@ -14,7 +14,7 @@ import java.security.*;
 public class ZiggeoAuth {
 
     final private static char[] hexArray = "0123456789abcdef".toCharArray();
-    private Ziggeo application;
+    private final Ziggeo application;
 
     public ZiggeoAuth(Ziggeo application) {
         this.application = application;

@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class ZiggeoAnalytics {
 
-    private Ziggeo application;
+    private final Ziggeo application;
 
     public ZiggeoAnalytics(Ziggeo application) {
         this.application = application;

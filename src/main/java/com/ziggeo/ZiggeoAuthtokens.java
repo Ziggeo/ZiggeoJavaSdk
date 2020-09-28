@@ -8,7 +8,7 @@ import java.io.InputStream;
 
 public class ZiggeoAuthtokens {
 
-    private Ziggeo application;
+    private final Ziggeo application;
 
     public ZiggeoAuthtokens(Ziggeo application) {
         this.application = application;

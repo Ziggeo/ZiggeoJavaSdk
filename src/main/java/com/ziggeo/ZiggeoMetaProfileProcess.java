@@ -9,7 +9,7 @@ import java.io.InputStream;
 
 public class ZiggeoMetaProfileProcess {
 
-    private Ziggeo application;
+    private final Ziggeo application;
 
     public ZiggeoMetaProfileProcess(Ziggeo application) {
         this.application = application;

@@ -39,8 +39,8 @@ public class ZiggeoConnect {
     private static final String GET = "GET";
     private static final String DELETE = "DELETE";
 
-    private Ziggeo application;
-    private String baseUri;
+    private final Ziggeo application;
+    private final String baseUri;
 
     public ZiggeoConnect(Ziggeo application, String baseUri) {
         this.application = application;
@@ -132,7 +132,7 @@ public class ZiggeoConnect {
 
         StringBuilder inputStringBuilder = new StringBuilder();
         BufferedReader bufferedReader = new BufferedReader(
-                new InputStreamReader(inputStream, "UTF-8"));
+                new InputStreamReader(inputStream, StandardCharsets.UTF_8));
         String line = bufferedReader.readLine();
         while (line != null) {
             inputStringBuilder.append(line);

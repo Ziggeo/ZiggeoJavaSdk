@@ -8,7 +8,7 @@ import java.io.InputStream;
 
 public class ZiggeoMetaProfiles {
 
-    private Ziggeo application;
+    private final Ziggeo application;
 
     public ZiggeoMetaProfiles(Ziggeo application) {
         this.application = application;

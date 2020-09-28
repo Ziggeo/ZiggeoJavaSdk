@@ -8,7 +8,7 @@ import java.io.InputStream;
 
 public class ZiggeoEffectProfiles {
 
-    private Ziggeo application;
+    private final Ziggeo application;
 
     public ZiggeoEffectProfiles(Ziggeo application) {
         this.application = application;

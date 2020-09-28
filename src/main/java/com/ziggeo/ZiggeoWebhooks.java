@@ -8,7 +8,7 @@ import java.io.InputStream;
 
 public class ZiggeoWebhooks {
 
-    private Ziggeo application;
+    private final Ziggeo application;
 
     public ZiggeoWebhooks(Ziggeo application) {
         this.application = application;

@@ -10,7 +10,7 @@ import java.io.InputStream;
 
 public class ZiggeoStreams {
 
-    private Ziggeo application;
+    private final Ziggeo application;
 
     public ZiggeoStreams(Ziggeo application) {
         this.application = application;

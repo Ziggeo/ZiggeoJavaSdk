@@ -4,12 +4,12 @@ import java.util.Map;
 
 public class Ziggeo {
 
-    private String token;
-    private String privateKey;
-    private String encryptionKey;
-    private ZiggeoConfig configObj;
-    private ZiggeoConnect connectObj;
-    private ZiggeoConnect apiConnectObj;
+    private final String token;
+    private final String privateKey;
+    private final String encryptionKey;
+    private final ZiggeoConfig configObj;
+    private final ZiggeoConnect connectObj;
+    private final ZiggeoConnect apiConnectObj;
     private ZiggeoAuth authObj = null;
     private ZiggeoVideos videosObj = null;
     private ZiggeoStreams streamsObj = null;
