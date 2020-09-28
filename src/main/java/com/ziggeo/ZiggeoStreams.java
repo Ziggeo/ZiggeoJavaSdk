@@ -25,11 +25,11 @@ public class ZiggeoStreams {
     }
 
     public InputStream downloadVideo(String videoTokenOrKey, String tokenOrKey) throws IOException, JSONException {
-        return this.application.connect().get("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "/video", null);
+        return this.application.cdnConnect().get("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "/video", null);
     }
 
     public InputStream downloadImage(String videoTokenOrKey, String tokenOrKey) throws IOException, JSONException {
-        return this.application.connect().get("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "/image", null);
+        return this.application.cdnConnect().get("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "/image", null);
     }
 
     public JSONObject pushToService(String videoTokenOrKey, String tokenOrKey, JSONObject data) throws IOException, JSONException {

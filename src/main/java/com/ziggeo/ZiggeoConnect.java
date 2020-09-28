@@ -41,17 +41,24 @@ public class ZiggeoConnect {
 
     private final Ziggeo application;
     private final String baseUri;
+    private ZiggeoConfig config;
 
     public ZiggeoConnect(Ziggeo application, String baseUri) {
         this.application = application;
         this.baseUri = baseUri;
+        this.config = new ZiggeoConfig();
+    }
+
+    public ZiggeoConnect(Ziggeo application, String baseUri, ZiggeoConfig config) {
+        this.application = application;
+        this.baseUri = baseUri;
+        this.config = config;
     }
 
     public InputStream request(String method, String path, JSONObject data,
                                File file) throws IOException, JSONException {
-        final int tryCount = 5;
         HttpResponse response = null;
-        for (int i = 0; i < tryCount; i++) {
+        for (int i = 0; i < config.getResilienceFactor(); i++) {
             try {
                 response = singleRequest(method, path, data, file);
                 if (response.getStatusLine().getStatusCode() < SERVER_ERROR) {

@@ -8,8 +8,9 @@ public class Ziggeo {
     private final String privateKey;
     private final String encryptionKey;
     private final ZiggeoConfig configObj;
-    private final ZiggeoConnect connectObj;
-    private final ZiggeoConnect apiConnectObj;
+    private ZiggeoConnect connectObj;
+    private ZiggeoConnect apiConnectObj;
+    private ZiggeoConnect cdnConnectObj;
     private ZiggeoAuth authObj = null;
     private ZiggeoVideos videosObj = null;
     private ZiggeoStreams streamsObj = null;
@@ -27,16 +28,24 @@ public class Ziggeo {
         this.privateKey = privateKey;
         this.encryptionKey = encryptionKey;
         this.configObj = new ZiggeoConfig();
+
         String serverApiUrl = config().SERVER_API_URL;
         for (Map.Entry<String, String> entry : config().getRegions().entrySet())
             if (this.token.startsWith(entry.getKey()))
                 serverApiUrl = entry.getValue();
-        this.connectObj = new ZiggeoConnect(this, serverApiUrl);
+        this.connectObj = new ZiggeoConnect(this, serverApiUrl, configObj);
+
         String apiUrl = config().API_URL;
         for (Map.Entry<String, String> entry : config().getApiRegions().entrySet())
             if (this.token.startsWith(entry.getKey()))
                 apiUrl = entry.getValue();
-        this.apiConnectObj = new ZiggeoConnect(this, apiUrl);
+        this.apiConnectObj = new ZiggeoConnect(this, apiUrl, configObj);
+
+        String cdnUrl = this.config().CDN_URL;
+        for (Map.Entry<String, String> entry : config().getCdnRegions().entrySet())
+            if (this.token.startsWith(entry.getKey()))
+                cdnUrl = entry.getValue();
+        this.cdnConnectObj = new ZiggeoConnect(this, cdnUrl, configObj);
     }
 
 
@@ -57,11 +66,43 @@ public class Ziggeo {
     }
 
     public ZiggeoConnect connect() {
+        if (this.connectObj == null) {
+            String serverApiUrl = this.config().SERVER_API_URL;
+            for (Map.Entry<String, String> entry : this.config().getRegions().entrySet()) {
+                if (this.token.startsWith(entry.getKey())) {
+                    serverApiUrl = entry.getValue();
+                }
+            }
+            this.connectObj = new ZiggeoConnect(this, serverApiUrl, this.configObj);
+        }
         return this.connectObj;
     }
 
     public ZiggeoConnect apiConnect() {
+        if (this.apiConnectObj == null) {
+            String apiUrl = this.config().API_URL;
+            for (Map.Entry<String, String> entry : this.config().getApiRegions().entrySet()) {
+                if (this.token.startsWith(entry.getKey())) {
+                    apiUrl = entry.getValue();
+                }
+            }
+            this.apiConnectObj = new ZiggeoConnect(this, apiUrl, this.configObj);
+        }
+
         return this.apiConnectObj;
+    }
+
+    public ZiggeoConnect cdnConnect() {
+        if (this.cdnConnectObj == null) {
+            String cdnUrl = this.config().CDN_URL;
+            for (Map.Entry<String, String> entry : this.config().getCdnRegions().entrySet()) {
+                if (this.token.startsWith(entry.getKey())) {
+                    cdnUrl = entry.getValue();
+                }
+            }
+            this.cdnConnectObj = new ZiggeoConnect(this, cdnUrl, this.configObj);
+        }
+        return this.cdnConnectObj;
     }
 
     public ZiggeoAuth auth() {

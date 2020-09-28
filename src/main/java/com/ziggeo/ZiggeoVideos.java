@@ -37,11 +37,11 @@ public class ZiggeoVideos {
     }
 
     public InputStream downloadVideo(String tokenOrKey) throws IOException, JSONException {
-        return this.application.connect().get("/v1/videos/" + tokenOrKey + "/video", null);
+        return this.application.cdnConnect().get("/v1/videos/" + tokenOrKey + "/video", null);
     }
 
     public InputStream downloadImage(String tokenOrKey) throws IOException, JSONException {
-        return this.application.connect().get("/v1/videos/" + tokenOrKey + "/image", null);
+        return this.application.cdnConnect().get("/v1/videos/" + tokenOrKey + "/image", null);
     }
 
     public JSONObject getStats(String tokenOrKey) throws IOException, JSONException {
