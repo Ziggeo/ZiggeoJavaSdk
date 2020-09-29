@@ -86,7 +86,7 @@ public class Ziggeo {
                     apiUrl = entry.getValue();
                 }
             }
-            this.apiConnectObj = new ZiggeoConnect(this, apiUrl, this.configObj);
+            this.apiConnectObj = new ZiggeoConnect(this, apiUrl);
         }
 
         return this.apiConnectObj;
@@ -100,7 +100,7 @@ public class Ziggeo {
                     cdnUrl = entry.getValue();
                 }
             }
-            this.cdnConnectObj = new ZiggeoConnect(this, cdnUrl, this.configObj);
+            this.cdnConnectObj = new ZiggeoConnect(this, cdnUrl);
         }
         return this.cdnConnectObj;
     }

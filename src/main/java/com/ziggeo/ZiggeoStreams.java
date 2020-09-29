@@ -21,7 +21,7 @@ public class ZiggeoStreams {
     }
 
     public JSONObject get(String videoTokenOrKey, String tokenOrKey) throws IOException, JSONException {
-        return this.application.connect().getJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "", null);
+        return this.application.connect().getJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey, null);
     }
 
     public InputStream downloadVideo(String videoTokenOrKey, String tokenOrKey) throws IOException, JSONException {
@@ -33,11 +33,11 @@ public class ZiggeoStreams {
     }
 
     public JSONObject pushToService(String videoTokenOrKey, String tokenOrKey, JSONObject data) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "/push", data, null);
+        return this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "/push", data);
     }
 
     public InputStream delete(String videoTokenOrKey, String tokenOrKey) throws IOException, JSONException {
-        return this.application.connect().delete("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "", null);
+        return this.application.connect().delete("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey, null);
     }
 
     public JSONObject create(String videoTokenOrKey, JSONObject data, File file) throws IOException, JSONException {
@@ -46,7 +46,7 @@ public class ZiggeoStreams {
             JSONObject streamResult = this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + result.getString("token") + "/confirm-video");
             return streamResult;
         } else {
-            return this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/", data, file);
+            return this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/", data);
         }
     }
 
@@ -56,7 +56,7 @@ public class ZiggeoStreams {
             JSONObject streamResult = this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + result.getString("token") + "/confirm-image");
             return streamResult;
         } else {
-            return this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "/image", data, file);
+            return this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "/image", data);
         }
     }
 
@@ -66,16 +66,16 @@ public class ZiggeoStreams {
             JSONObject streamResult = this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + result.getString("token") + "/confirm-video");
             return streamResult;
         } else {
-            return this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "/video", data, file);
+            return this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "/video", data);
         }
     }
 
     public JSONObject attachSubtitle(String videoTokenOrKey, String tokenOrKey, JSONObject data) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "/subtitle", data, null);
+        return this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "/subtitle", data);
     }
 
     public JSONObject bind(String videoTokenOrKey, String tokenOrKey) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "/bind", null, null);
+        return this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "/bind", null);
     }
 
 }

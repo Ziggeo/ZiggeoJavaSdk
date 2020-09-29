@@ -18,7 +18,7 @@ public class ZiggeoApplication {
     }
 
     public JSONObject update(JSONObject data) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/application", data, null);
+        return this.application.connect().postJSON("/v1/application", data);
     }
 
     public JSONObject getStats(JSONObject data) throws IOException, JSONException {

@@ -21,23 +21,36 @@ public class ZiggeoEffectProfileProcess {
     }
 
     public JSONObject get(String effectTokenOrKey, String tokenOrKey) throws IOException, JSONException {
-        return this.application.connect().getJSON("/v1/effects/" + effectTokenOrKey + "/process/" + tokenOrKey + "", null);
+        return this.application.connect().getJSON("/v1/effects/" + effectTokenOrKey + "/process/" + tokenOrKey, null);
     }
 
     public InputStream delete(String effectTokenOrKey, String tokenOrKey) throws IOException, JSONException {
-        return this.application.connect().delete("/v1/effects/" + effectTokenOrKey + "/process/" + tokenOrKey + "", null);
+        return this.application.connect().delete("/v1/effects/" + effectTokenOrKey + "/process/" + tokenOrKey, null);
     }
 
     public JSONObject createFilterProcess(String effectTokenOrKey, JSONObject data) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/effects/" + effectTokenOrKey + "/process/filter", data, null);
+        return this.application.connect().postJSON("/v1/effects/" + effectTokenOrKey + "/process/filter", data);
     }
 
     public JSONObject createWatermarkProcess(String effectTokenOrKey, JSONObject data, File file) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/effects/" + effectTokenOrKey + "/process/watermark", data, file);
+        if (file != null) {
+            JSONObject result = this.application.connect().postUploadJSON("/v1/effects/" + effectTokenOrKey + "/process/watermark-upload-url", "effect_process", data, file, null);
+            final String videoToken = result.getString("token");
+            result = this.application.connect().postJSON("/v1/effects/" + effectTokenOrKey + "/process/" + videoToken + "/confirm-watermark");
+            return result;
+        } else {
+            return this.application.connect().postJSON("/v1/effects/" + effectTokenOrKey + "/process/watermark", data);
+        }
     }
 
     public JSONObject editWatermarkProcess(String effectTokenOrKey, String tokenOrKey, JSONObject data, File file) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/effects/" + effectTokenOrKey + "/process/watermark/" + tokenOrKey + "", data, file);
+        if (file != null) {
+            this.application.connect().postUploadJSON("/v1/effects/" + effectTokenOrKey + "/process/" + tokenOrKey + "/watermark-upload-url", "effect_process", data, file, null);
+            JSONObject result = this.application.connect().postJSON("/v1/effects/" + effectTokenOrKey + "/process/" + tokenOrKey + "/confirm-watermark");
+            return result;
+        } else {
+            return this.application.connect().postJSON("/v1/effects/" + effectTokenOrKey + "/process/watermark/" + tokenOrKey, data);
+        }
     }
 
 }

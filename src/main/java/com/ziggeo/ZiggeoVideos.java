@@ -25,7 +25,7 @@ public class ZiggeoVideos {
     }
 
     public JSONObject get(String tokenOrKey) throws IOException, JSONException {
-        return this.application.connect().getJSON("/v1/videos/" + tokenOrKey + "", null);
+        return this.application.connect().getJSON("/v1/videos/" + tokenOrKey, null);
     }
 
     public JSONArray getBulk(JSONObject data) throws IOException, JSONException {
@@ -49,19 +49,19 @@ public class ZiggeoVideos {
     }
 
     public JSONObject pushToService(String tokenOrKey, JSONObject data) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/videos/" + tokenOrKey + "/push", data, null);
+        return this.application.connect().postJSON("/v1/videos/" + tokenOrKey + "/push", data);
     }
 
     public JSONObject applyEffect(String tokenOrKey, JSONObject data) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/videos/" + tokenOrKey + "/effect", data, null);
+        return this.application.connect().postJSON("/v1/videos/" + tokenOrKey + "/effect", data);
     }
 
     public JSONObject applyMeta(String tokenOrKey, JSONObject data) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/videos/" + tokenOrKey + "/metaprofile", data, null);
+        return this.application.connect().postJSON("/v1/videos/" + tokenOrKey + "/metaprofile", data);
     }
 
     public JSONObject update(String tokenOrKey, JSONObject data) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/videos/" + tokenOrKey + "", data, null);
+        return this.application.connect().postJSON("/v1/videos/" + tokenOrKey, data);
     }
 
     public JSONArray updateBulk(JSONObject data) throws IOException, JSONException {
@@ -69,17 +69,20 @@ public class ZiggeoVideos {
     }
 
     public InputStream delete(String tokenOrKey) throws IOException, JSONException {
-        return this.application.connect().delete("/v1/videos/" + tokenOrKey + "", null);
+        return this.application.connect().delete("/v1/videos/" + tokenOrKey, null);
     }
 
     public JSONObject create(JSONObject data, File file) throws IOException, JSONException {
         if (file != null) {
             JSONObject result = this.application.connect().postUploadJSON("/v1/videos-upload-url/", "video", data, file, "video_type");
-            result.put("default_stream", this.application.connect().postJSON("/v1/videos/" + result.getString("token")
-                    + "/streams/" + result.getJSONObject("default_stream").getJSONObject("token") + "/confirm-video"));
+            final String videoToken = result.getString("token");
+            final String streamToken = result.getJSONObject("default_stream").getString("token");
+            final JSONObject confirmVideoResponse = this.application.connect().postJSON("/v1/videos/" + videoToken
+                    + "/streams/" + streamToken + "/confirm-video");
+            result.put("default_stream", confirmVideoResponse);
             return result;
         } else {
-            return this.application.connect().postJSON("/v1/videos/", data, file);
+            return this.application.connect().postJSON("/v1/videos/", data);
         }
     }
 

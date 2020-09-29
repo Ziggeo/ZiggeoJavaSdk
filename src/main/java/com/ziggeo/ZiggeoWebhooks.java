@@ -15,15 +15,15 @@ public class ZiggeoWebhooks {
     }
 
     public InputStream create(JSONObject data) throws IOException, JSONException {
-        return this.application.connect().post("/v1/api/hook", data, null);
+        return this.application.connect().post("/v1/api/hook", data);
     }
 
     public InputStream confirm(JSONObject data) throws IOException, JSONException {
-        return this.application.connect().post("/v1/api/confirmhook", data, null);
+        return this.application.connect().post("/v1/api/confirmhook", data);
     }
 
     public InputStream delete(JSONObject data) throws IOException, JSONException {
-        return this.application.connect().post("/v1/api/removehook", data, null);
+        return this.application.connect().post("/v1/api/removehook", data);
     }
 
 }

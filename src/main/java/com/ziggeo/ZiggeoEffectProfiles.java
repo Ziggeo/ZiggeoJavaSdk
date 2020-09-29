@@ -15,7 +15,7 @@ public class ZiggeoEffectProfiles {
     }
 
     public JSONObject create(JSONObject data) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/effects/", data, null);
+        return this.application.connect().postJSON("/v1/effects/", data);
     }
 
     public JSONObject index(JSONObject data) throws IOException, JSONException {
@@ -23,15 +23,15 @@ public class ZiggeoEffectProfiles {
     }
 
     public JSONObject get(String tokenOrKey) throws IOException, JSONException {
-        return this.application.connect().getJSON("/v1/effects/" + tokenOrKey + "", null);
+        return this.application.connect().getJSON("/v1/effects/" + tokenOrKey, null);
     }
 
     public InputStream delete(String tokenOrKey) throws IOException, JSONException {
-        return this.application.connect().delete("/v1/effects/" + tokenOrKey + "", null);
+        return this.application.connect().delete("/v1/effects/" + tokenOrKey, null);
     }
 
     public JSONObject update(String tokenOrKey, JSONObject data) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/effects/" + tokenOrKey + "", data, null);
+        return this.application.connect().postJSON("/v1/effects/" + tokenOrKey, data);
     }
 
 }

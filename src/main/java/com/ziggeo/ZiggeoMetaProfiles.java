@@ -15,7 +15,7 @@ public class ZiggeoMetaProfiles {
     }
 
     public JSONObject create(JSONObject data) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/metaprofiles/", data, null);
+        return this.application.connect().postJSON("/v1/metaprofiles/", data);
     }
 
     public JSONObject index(JSONObject data) throws IOException, JSONException {
@@ -23,11 +23,11 @@ public class ZiggeoMetaProfiles {
     }
 
     public JSONObject get(String tokenOrKey) throws IOException, JSONException {
-        return this.application.connect().getJSON("/v1/metaprofiles/" + tokenOrKey + "", null);
+        return this.application.connect().getJSON("/v1/metaprofiles/" + tokenOrKey, null);
     }
 
     public InputStream delete(String tokenOrKey) throws IOException, JSONException {
-        return this.application.connect().delete("/v1/metaprofiles/" + tokenOrKey + "", null);
+        return this.application.connect().delete("/v1/metaprofiles/" + tokenOrKey, null);
     }
 
 }

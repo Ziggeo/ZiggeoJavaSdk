@@ -40,8 +40,8 @@ public class ZiggeoAuth {
     }
 
     private String generateNonce() {
-        return System.currentTimeMillis() + ""
-                + Math.floor((Math.random() * (Math.pow(2, 32) - 1)));
+        return String.valueOf(System.currentTimeMillis()
+                + Math.floor((Math.random() * (Math.pow(2, 32) - 1))));
     }
 
     private String encrypt(String plaintext) throws NoSuchAlgorithmException,

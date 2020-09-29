@@ -15,19 +15,19 @@ public class ZiggeoAuthtokens {
     }
 
     public JSONObject get(String token) throws IOException, JSONException {
-        return this.application.connect().getJSON("/v1/authtokens/" + token + "", null);
+        return this.application.connect().getJSON("/v1/authtokens/" + token, null);
     }
 
     public JSONObject update(String tokenOrKey, JSONObject data) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/authtokens/" + tokenOrKey + "", data, null);
+        return this.application.connect().postJSON("/v1/authtokens/" + tokenOrKey, data);
     }
 
     public InputStream delete(String tokenOrKey) throws IOException, JSONException {
-        return this.application.connect().delete("/v1/authtokens/" + tokenOrKey + "", null);
+        return this.application.connect().delete("/v1/authtokens/" + tokenOrKey, null);
     }
 
     public JSONObject create(JSONObject data) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/authtokens/", data, null);
+        return this.application.connect().postJSON("/v1/authtokens/", data);
     }
 
 }
