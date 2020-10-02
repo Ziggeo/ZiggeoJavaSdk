@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 
-class VideoUpload {
+public class VideoUpload {
 
     public static void main(String[] args) throws Exception {
         Ziggeo ziggeo = new Ziggeo(args[0], args[1], "");

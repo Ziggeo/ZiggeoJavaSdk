@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
-class ImageDownload {
+public class ImageDownload {
 
     public static void main(String[] args) throws Exception {
         Ziggeo ziggeo = new Ziggeo(args[0], args[1], "");

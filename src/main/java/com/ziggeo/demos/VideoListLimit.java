@@ -4,7 +4,7 @@ import com.ziggeo.Ziggeo;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-class VideoListLimit {
+public class VideoListLimit {
 
     public static void main(String[] args) throws Exception {
         Ziggeo ziggeo = new Ziggeo(args[0], args[1], "");
