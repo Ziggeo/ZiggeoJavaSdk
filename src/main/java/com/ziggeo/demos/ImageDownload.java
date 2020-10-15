@@ -10,7 +10,7 @@ public class ImageDownload {
 
     public static void main(String[] args) throws Exception {
         Ziggeo ziggeo = new Ziggeo(args[0], args[1], "");
-        InputStream fileStream = ziggeo.videos().downloadVideo(args[2]);
+        InputStream fileStream = ziggeo.videos().downloadImage(args[2]);
         File targetFile = new File("image.png");
         try (FileOutputStream outputStream = new FileOutputStream(targetFile)) {
             int read;
