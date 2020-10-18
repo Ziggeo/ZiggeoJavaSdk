@@ -3,13 +3,13 @@ package com.ziggeo;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
 public class ZiggeoMetaProfileProcess {
 
-    private final Ziggeo application;
+    private Ziggeo application;
 
     public ZiggeoMetaProfileProcess(Ziggeo application) {
         this.application = application;
@@ -20,11 +20,11 @@ public class ZiggeoMetaProfileProcess {
     }
 
     public JSONObject get(String metaTokenOrKey, String tokenOrKey) throws IOException, JSONException {
-        return this.application.connect().getJSON("/v1/metaprofiles/" + metaTokenOrKey + "/process/" + tokenOrKey, null);
+        return this.application.connect().getJSON("/v1/metaprofiles/" + metaTokenOrKey + "/process/" + tokenOrKey + "", null);
     }
 
     public InputStream delete(String metaTokenOrKey, String tokenOrKey) throws IOException, JSONException {
-        return this.application.connect().delete("/v1/metaprofiles/" + metaTokenOrKey + "/process/" + tokenOrKey, null);
+        return this.application.connect().delete("/v1/metaprofiles/" + metaTokenOrKey + "/process/" + tokenOrKey + "", null);
     }
 
     public JSONObject createVideoAnalysisProcess(String metaTokenOrKey) throws IOException, JSONException {

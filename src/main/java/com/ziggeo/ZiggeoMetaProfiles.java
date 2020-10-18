@@ -1,14 +1,15 @@
 package com.ziggeo;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
 public class ZiggeoMetaProfiles {
 
-    private final Ziggeo application;
+    private Ziggeo application;
 
     public ZiggeoMetaProfiles(Ziggeo application) {
         this.application = application;
@@ -23,11 +24,11 @@ public class ZiggeoMetaProfiles {
     }
 
     public JSONObject get(String tokenOrKey) throws IOException, JSONException {
-        return this.application.connect().getJSON("/v1/metaprofiles/" + tokenOrKey, null);
+        return this.application.connect().getJSON("/v1/metaprofiles/" + tokenOrKey + "", null);
     }
 
     public InputStream delete(String tokenOrKey) throws IOException, JSONException {
-        return this.application.connect().delete("/v1/metaprofiles/" + tokenOrKey, null);
+        return this.application.connect().delete("/v1/metaprofiles/" + tokenOrKey + "", null);
     }
 
 }

@@ -1,3 +1,4 @@
+
 package com.ziggeo;
 
 import java.util.HashMap;
@@ -19,12 +20,12 @@ public class ZiggeoConfig {
 
     public ZiggeoConfig() {
         regions = new HashMap<>();
-        regions.put("r1", "https://srvapi-eu-west-1.ziggeo.com");
-        apiRegions = new HashMap<>();
-        apiRegions.put("r1", "https://api-eu-west-1.ziggeo.com");
-        cdnRegions = new HashMap<>();
-        cdnRegions.put("r1", "https://video-cdn-eu-west-1.ziggeo.com");
-        resilienceOnFail = new HashMap<>();
+                    regions.put("r1", "https://srvapi-eu-west-1.ziggeo.com");
+                apiRegions = new HashMap<>();
+                    apiRegions.put("r1", "https://api-eu-west-1.ziggeo.com");
+                cdnRegions = new HashMap<>();
+                    cdnRegions.put("r1", "https://video-cdn-eu-west-1.ziggeo.com");
+                resilienceOnFail = new HashMap<>();
         resilienceOnFail.put("error", "Too many failed attempts");
         info = new HashMap<>();
         info.put("progress_show", "no");
