@@ -1,6 +1,6 @@
 # Ziggeo's Java Server SDK
 
-latest version: **0.1.21**
+latest version: **0.1.24**
 
 ## Index
 
@@ -78,6 +78,7 @@ latest version: **0.1.21**
         4. [Meta Profile Process CreateVideoAnalysisProcess](#method-meta-profile-process-createvideoanalysisprocess)
         5. [Meta Profile Process CreateAudioTranscriptionProcess](#method-meta-profile-process-createaudiotranscriptionprocess)
         6. [Meta Profile Process CreateNsfwProcess](#method-meta-profile-process-creatensfwprocess)
+        7. [Meta Profile Process CreateProfanityProcess](#method-meta-profile-process-createprofanityprocess)
     11. [Methods for Webhooks](#method-webhooks)
         1. [Webhooks Create](#method-webhooks-create)
         2. [Webhooks Confirm](#method-webhooks-confirm)
@@ -373,6 +374,9 @@ ziggeo.videos().create(JSONObject arguments, String file)
 - tags: *Video Tags*
 - key: *Unique (optional) name of video*
 - volatile: *Automatically removed this video if it remains empty*
+- effect_profile: *Set the effect profile that you want to have applied to your video.*
+- meta_profile: *Set the meta profile that you want to have applied to your video once created.*
+- video_profile: *Set the video profile that you want to have applied to your video as you create it.*
 
 #### Analytics<a name="method-videos-analytics"></a>
 
@@ -830,6 +834,17 @@ ziggeo.metaProfileProcess().createNsfwProcess(String metaTokenOrKey, JSONObject 
  Arguments
 - nsfw_action: *One of the following three: approve, reject, nothing.*
 
+#### Create Profanity Process<a name="method-meta-profile-process-create-profanity-process"></a>
+
+Create a new profanity filter meta process
+
+```java
+ziggeo.metaProfileProcess().createProfanityProcess(String metaTokenOrKey, JSONObject arguments)
+```
+
+ Arguments
+- profanity_action: *One of the following three: approve, reject, nothing.*
+
 ### Webhooks<a name="method-webhooks"></a>
 
 
@@ -896,6 +911,6 @@ ziggeo.analytics().get(JSONObject arguments)
 
 ## License <a name="license"></a>
 
-Copyright (c) 2013-2020 Ziggeo
+Copyright (c) 2013-2021 Ziggeo
  
 Apache 2.0 License

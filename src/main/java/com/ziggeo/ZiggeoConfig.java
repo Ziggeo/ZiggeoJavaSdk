@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class ZiggeoConfig {
 
-    public final String SERVER_API_URL = "https://srvapi.ziggeo.com";
+    public final String SERVER_API_URL = "https://srv-api.ziggeo.com";
     public final String API_URL = "https://api-us-east-1.ziggeo.com";
     public final String CDN_URL = "https://video-cdn.ziggeo.com";
     private final Map<String, String> cdnRegions;
@@ -20,7 +20,7 @@ public class ZiggeoConfig {
 
     public ZiggeoConfig() {
         regions = new HashMap<>();
-                    regions.put("r1", "https://srvapi-eu-west-1.ziggeo.com");
+                    regions.put("r1", "https://srv-api-eu-west-1.ziggeo.com");
                 apiRegions = new HashMap<>();
                     apiRegions.put("r1", "https://api-eu-west-1.ziggeo.com");
                 cdnRegions = new HashMap<>();

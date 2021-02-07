@@ -39,5 +39,9 @@ public class ZiggeoMetaProfileProcess {
         return this.application.connect().postJSON("/v1/metaprofiles/" + metaTokenOrKey + "/process/nsfw", data);
     }
 
+    public JSONObject createProfanityProcess(String metaTokenOrKey, JSONObject data) throws IOException, JSONException {
+        return this.application.connect().postJSON("/v1/metaprofiles/" + metaTokenOrKey + "/process/profanity", data);
+    }
+
 }
 
