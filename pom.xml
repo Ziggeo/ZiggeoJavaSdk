@@ -5,7 +5,7 @@
     <groupId>com.ziggeo</groupId>
     <artifactId>ziggeo-java-sdk</artifactId>
     <packaging>jar</packaging>
-    <version>0.1.24-SNAPSHOT</version>
+    <version>0.1.28-SNAPSHOT</version>
     <name>${project.groupId}:${project.artifactId}:${project.version}</name>
     <url>https://github.com/Ziggeo/ZiggeoJavaSdk</url>
     <properties>

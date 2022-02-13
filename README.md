@@ -1,6 +1,6 @@
 # Ziggeo's Java Server SDK
 
-latest version: **0.1.24**
+latest version: **0.1.28**
 
 ## Index
 
@@ -43,35 +43,50 @@ latest version: **0.1.24**
         8. [Streams AttachImage](#method-streams-attachimage)
         9. [Streams AttachVideo](#method-streams-attachvideo)
         10. [Streams AttachSubtitle](#method-streams-attachsubtitle)
-        11. [Streams Bind](#method-streams-bind)
-    5. [Methods for Authtokens](#method-authtokens)
+    5. [Methods for Audios](#method-audios)
+        1. [Audios Index](#method-audios-index)
+        2. [Audios Count](#method-audios-count)
+        3. [Audios Get](#method-audios-get)
+        4. [Audios GetBulk](#method-audios-getbulk)
+        5. [Audios DownloadAudio](#method-audios-downloadaudio)
+        6. [Audios Update](#method-audios-update)
+        7. [Audios UpdateBulk](#method-audios-updatebulk)
+        8. [Audios Delete](#method-audios-delete)
+        9. [Audios Create](#method-audios-create)
+    6. [Methods for Audio_streams](#method-audio-streams)
+        1. [Audio_streams Index](#method-audio-streams-index)
+        2. [Audio_streams Get](#method-audio-streams-get)
+        3. [Audio_streams DownloadAudio](#method-audio-streams-downloadaudio)
+        4. [Audio_streams Delete](#method-audio-streams-delete)
+        5. [Audio_streams Create](#method-audio-streams-create)
+    7. [Methods for Authtokens](#method-authtokens)
         1. [Authtokens Get](#method-authtokens-get)
         2. [Authtokens Update](#method-authtokens-update)
         3. [Authtokens Delete](#method-authtokens-delete)
         4. [Authtokens Create](#method-authtokens-create)
-    6. [Methods for Application](#method-application)
+    8. [Methods for Application](#method-application)
         1. [Application Get](#method-application-get)
         2. [Application Update](#method-application-update)
         3. [Application GetStats](#method-application-getstats)
-    7. [Methods for Effect Profiles](#method-effect-profiles)
+    9. [Methods for Effect Profiles](#method-effect-profiles)
         1. [Effect Profiles Create](#method-effect-profiles-create)
         2. [Effect Profiles Index](#method-effect-profiles-index)
         3. [Effect Profiles Get](#method-effect-profiles-get)
         4. [Effect Profiles Delete](#method-effect-profiles-delete)
         5. [Effect Profiles Update](#method-effect-profiles-update)
-    8. [Methods for Effect Profile Process](#method-effect-profile-process)
+    10. [Methods for Effect Profile Process](#method-effect-profile-process)
         1. [Effect Profile Process Index](#method-effect-profile-process-index)
         2. [Effect Profile Process Get](#method-effect-profile-process-get)
         3. [Effect Profile Process Delete](#method-effect-profile-process-delete)
         4. [Effect Profile Process CreateFilterProcess](#method-effect-profile-process-createfilterprocess)
         5. [Effect Profile Process CreateWatermarkProcess](#method-effect-profile-process-createwatermarkprocess)
         6. [Effect Profile Process EditWatermarkProcess](#method-effect-profile-process-editwatermarkprocess)
-    9. [Methods for Meta Profiles](#method-meta-profiles)
+    11. [Methods for Meta Profiles](#method-meta-profiles)
         1. [Meta Profiles Create](#method-meta-profiles-create)
         2. [Meta Profiles Index](#method-meta-profiles-index)
         3. [Meta Profiles Get](#method-meta-profiles-get)
         4. [Meta Profiles Delete](#method-meta-profiles-delete)
-    10. [Methods for Meta Profile Process](#method-meta-profile-process)
+    12. [Methods for Meta Profile Process](#method-meta-profile-process)
         1. [Meta Profile Process Index](#method-meta-profile-process-index)
         2. [Meta Profile Process Get](#method-meta-profile-process-get)
         3. [Meta Profile Process Delete](#method-meta-profile-process-delete)
@@ -79,11 +94,11 @@ latest version: **0.1.24**
         5. [Meta Profile Process CreateAudioTranscriptionProcess](#method-meta-profile-process-createaudiotranscriptionprocess)
         6. [Meta Profile Process CreateNsfwProcess](#method-meta-profile-process-creatensfwprocess)
         7. [Meta Profile Process CreateProfanityProcess](#method-meta-profile-process-createprofanityprocess)
-    11. [Methods for Webhooks](#method-webhooks)
+    13. [Methods for Webhooks](#method-webhooks)
         1. [Webhooks Create](#method-webhooks-create)
         2. [Webhooks Confirm](#method-webhooks-confirm)
         3. [Webhooks Delete](#method-webhooks-delete)
-    12. [Methods for Analytics](#method-analytics)
+    14. [Methods for Analytics](#method-analytics)
         1. [Analytics Get](#method-analytics-get)
 5. [License](#license)
 
@@ -184,14 +199,16 @@ Currently available methods are branched off within different categories:
 
 1. Videos
 2. Streams
-3. Authtokens
-4. Application
-5. Effect Profiles
-6. Effect Profile Process
-7. Meta Profiles
-8. Meta Profile Process
-9. Webhooks
-10. Analytics
+3. Audios
+4. Audio_streams
+5. Authtokens
+6. Application
+7. Effect Profiles
+8. Effect Profile Process
+9. Meta Profiles
+10. Meta Profile Process
+11. Webhooks
+12. Analytics
 
 Each of this sections has their own actions and they are explained bellow
 
@@ -464,7 +481,7 @@ ziggeo.streams().create(String videoTokenOrKey, JSONObject arguments, String fil
 
 #### Attach Image<a name="method-streams-attach-image"></a>
 
-Attaches an image to a new stream
+Attaches an image to a new stream. Must be attached before video, since video upload triggers the transcoding job and binds the stream
 
 ```java
 ziggeo.streams().attachImage(String videoTokenOrKey, String tokenOrKey, JSONObject arguments, String file)
@@ -497,15 +514,173 @@ ziggeo.streams().attachSubtitle(String videoTokenOrKey, String tokenOrKey, JSONO
 - label: *Subtitle reference*
 - data: *Actual subtitle*
 
-#### Bind<a name="method-streams-bind"></a>
+### Audios<a name="method-audios"></a>
 
-Closes and submits the stream
+
+The audios resource allows you to access all single audios. Each video may contain more than one stream.
+
+#### Index<a name="method-audios-index"></a>
+
+Query an array of audios (will return at most 50 audios by default). Newest audios come first.
 
 ```java
-ziggeo.streams().bind(String videoTokenOrKey, String tokenOrKey, JSONObject arguments)
+ziggeo.audios().index(JSONObject arguments)
 ```
 
  Arguments
+- limit: *Limit the number of returned audios. Can be set up to 100.*
+- skip: *Skip the first [n] entries.*
+- reverse: *Reverse the order in which audios are returned.*
+- states: *Filter audios by state*
+- tags: *Filter the search result to certain tags, encoded as a comma-separated string*
+
+#### Count<a name="method-audios-count"></a>
+
+Get the audio count for the application.
+
+```java
+ziggeo.audios().count(JSONObject arguments)
+```
+
+ Arguments
+- states: *Filter audios by state*
+- tags: *Filter the search result to certain tags, encoded as a comma-separated string*
+
+#### Get<a name="method-audios-get"></a>
+
+Get a single audio by token or key.
+
+```java
+ziggeo.audios().get(String tokenOrKey)
+```
+
+#### Get Bulk<a name="method-audios-get-bulk"></a>
+
+Get multiple audios by tokens or keys.
+
+```java
+ziggeo.audios().getBulk(JSONObject arguments)
+```
+
+ Arguments
+- tokens_or_keys: *Comma-separated list with the desired audios tokens or keys (Limit: 100 tokens or keys).*
+
+#### Download Audio<a name="method-audios-download-audio"></a>
+
+Download the audio data file
+
+```java
+ziggeo.audios().downloadAudio(String tokenOrKey)
+```
+
+#### Update<a name="method-audios-update"></a>
+
+Update single audio by token or key.
+
+```java
+ziggeo.audios().update(String tokenOrKey, JSONObject arguments)
+```
+
+ Arguments
+- min_duration: *Minimal duration of audio*
+- max_duration: *Maximal duration of audio*
+- tags: *Audio Tags*
+- key: *Unique (optional) name of audio*
+- volatile: *Automatically removed this audio if it remains empty*
+- expiration_days: *After how many days will this audio be deleted*
+- expire_on: *On which date will this audio be deleted. String in ISO 8601 format: YYYY-MM-DD*
+
+#### Update Bulk<a name="method-audios-update-bulk"></a>
+
+Update multiple audios by token or key.
+
+```java
+ziggeo.audios().updateBulk(JSONObject arguments)
+```
+
+ Arguments
+- tokens_or_keys: *Comma-separated list with the desired audios tokens or keys (Limit: 100 tokens or keys).*
+- min_duration: *Minimal duration of audio*
+- max_duration: *Maximal duration of audio*
+- tags: *Audio Tags*
+- volatile: *Automatically removed this audio if it remains empty*
+- expiration_days: *After how many days will this audio be deleted*
+- expire_on: *On which date will this audio be deleted. String in ISO 8601 format: YYYY-MM-DD*
+
+#### Delete<a name="method-audios-delete"></a>
+
+Delete a single audio by token or key.
+
+```java
+ziggeo.audios().delete(String tokenOrKey)
+```
+
+#### Create<a name="method-audios-create"></a>
+
+Create a new audio.
+
+```java
+ziggeo.audios().create(JSONObject arguments, String file)
+```
+
+ Arguments
+- file: *Audio file to be uploaded*
+- min_duration: *Minimal duration of audio*
+- max_duration: *Maximal duration of audio*
+- tags: *Audio Tags*
+- key: *Unique (optional) name of audio*
+- volatile: *Automatically removed this video if it remains empty*
+
+### Audio_streams<a name="method-audio-streams"></a>
+
+
+The streams resource allows you to directly access all streams associated with a single audio.
+
+#### Index<a name="method-audio-streams-index"></a>
+
+Return all streams associated with a audio
+
+```java
+ziggeo.audio_streams().index(String audioTokenOrKey, JSONObject arguments)
+```
+
+ Arguments
+- states: *Filter streams by state*
+
+#### Get<a name="method-audio-streams-get"></a>
+
+Get a single stream
+
+```java
+ziggeo.audio_streams().get(String audioTokenOrKey, String tokenOrKey)
+```
+
+#### Download Audio<a name="method-audio-streams-download-audio"></a>
+
+Download the audio data associated with the stream
+
+```java
+ziggeo.audio_streams().downloadAudio(String audioTokenOrKey, String tokenOrKey)
+```
+
+#### Delete<a name="method-audio-streams-delete"></a>
+
+Delete the stream
+
+```java
+ziggeo.audio_streams().delete(String audioTokenOrKey, String tokenOrKey)
+```
+
+#### Create<a name="method-audio-streams-create"></a>
+
+Create a new stream
+
+```java
+ziggeo.audio_streams().create(String audioTokenOrKey, JSONObject arguments, String file)
+```
+
+ Arguments
+- file: *Audio file to be uploaded*
 
 ### Authtokens<a name="method-authtokens"></a>
 
@@ -911,6 +1086,6 @@ ziggeo.analytics().get(JSONObject arguments)
 
 ## License <a name="license"></a>
 
-Copyright (c) 2013-2021 Ziggeo
+Copyright (c) 2013-2022 Ziggeo
  
 Apache 2.0 License

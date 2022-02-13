@@ -70,9 +70,5 @@ public class ZiggeoStreams {
         return this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "/subtitle", data);
     }
 
-    public JSONObject bind(String videoTokenOrKey, String tokenOrKey) throws IOException, JSONException {
-        return this.application.connect().postJSON("/v1/videos/" + videoTokenOrKey + "/streams/" + tokenOrKey + "/bind", null);
-    }
-
 }
 

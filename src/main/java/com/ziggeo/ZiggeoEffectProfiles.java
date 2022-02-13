@@ -19,8 +19,8 @@ public class ZiggeoEffectProfiles {
         return this.application.connect().postJSON("/v1/effects/", data);
     }
 
-    public JSONObject index(JSONObject data) throws IOException, JSONException {
-        return this.application.connect().getJSON("/v1/effects/", data);
+    public JSONArray index(JSONObject data) throws IOException, JSONException {
+        return this.application.connect().getJSONArray("/v1/effects/", data);
     }
 
     public JSONObject get(String tokenOrKey) throws IOException, JSONException {
