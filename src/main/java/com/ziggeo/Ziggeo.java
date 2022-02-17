@@ -11,6 +11,7 @@ public class Ziggeo {
     private ZiggeoConnect connectObj;
     private ZiggeoConnect apiConnectObj;
     private ZiggeoConnect cdnConnectObj;
+    private ZiggeoConnect jsCdnConnectObj;
     private ZiggeoAuth authObj = null;
     private ZiggeoVideos videosObj = null;
     private ZiggeoStreams streamsObj = null;
@@ -47,6 +48,12 @@ public class Ziggeo {
             if (this.token.startsWith(entry.getKey()))
                 cdnUrl = entry.getValue();
         this.cdnConnectObj = new ZiggeoConnect(this, cdnUrl, configObj);
+
+				String jsCdnUrl = this.config().JS_CDN_URL;
+				for (Map.Entry<String, String> entry : config().getJsCdnRegions().entrySet())
+						if (this.token.startsWith(entry.getKey()))
+								jsCdnUrl = entry.getValue();
+				this.jsCdnConnectObj = new ZiggeoConnect(this, jsCdnUrl, configObj);
     }
 
 
@@ -105,6 +112,19 @@ public class Ziggeo {
         }
         return this.cdnConnectObj;
     }
+
+		public ZiggeoConnect jsCdnConnect() {
+				if (this.jsCdnConnectObj == null) {
+						String jsCdnUrl = this.config().JS_CDN_URL;
+						for (Map.Entry<String, String> entry : this.config().getJsCdnRegions().entrySet()) {
+								if (this.token.startsWith(entry.getKey())) {
+										jsCdnUrl = entry.getValue();
+								}
+						}
+						this.jsCdnConnectObj = new ZiggeoConnect(this, jsCdnUrl);
+				}
+				return this.jsCdnConnectObj;
+		}
 
     public ZiggeoAuth auth() {
     if (this.authObj == null)

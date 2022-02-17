@@ -16,44 +16,44 @@ public class ZiggeoAudios {
     }
 
     public JSONArray index(JSONObject data) throws IOException, JSONException {
-        return this.application.apiConnect().getJSONArray("/server/v1/audios/", data);
+        return this.application.apiConnect().getJSONArray("/v1/audios/", data);
     }
 
     public JSONObject count(JSONObject data) throws IOException, JSONException {
-        return this.application.apiConnect().getJSON("/server/v1/audios/count", data);
+        return this.application.apiConnect().getJSON("/v1/audios/count", data);
     }
 
     public JSONObject get(String tokenOrKey) throws IOException, JSONException {
-        return this.application.apiConnect().getJSON("/server/v1/audios/bytoken/" + tokenOrKey + "", null);
+        return this.application.apiConnect().getJSON("/v1/audios/" + tokenOrKey + "", null);
     }
 
     public JSONArray getBulk(JSONObject data) throws IOException, JSONException {
-        return this.application.apiConnect().postJSONArray("/server/v1/audios/get-bulk", data);
+        return this.application.apiConnect().postJSONArray("/v1/audios/get-bulk", data);
     }
 
     public InputStream downloadAudio(String tokenOrKey) throws IOException, JSONException {
-        return this.application.connect().get("/v1/server/v1/audios/bytoken/" + tokenOrKey + "/video", null);
+        return this.application.jsCdnConnect().get("/v1/audios/" + tokenOrKey + "/audio", null);
     }
 
     public JSONObject update(String tokenOrKey, JSONObject data) throws IOException, JSONException {
-        return this.application.apiConnect().postJSON("/server/v1/audios/bytoken/" + tokenOrKey + "", data);
+        return this.application.apiConnect().postJSON("/v1/audios/" + tokenOrKey + "", data);
     }
 
     public JSONArray updateBulk(JSONObject data) throws IOException, JSONException {
-        return this.application.apiConnect().postJSONArray("/server/v1/audios/update-bulk", data);
+        return this.application.apiConnect().postJSONArray("/v1/audios/update-bulk", data);
     }
 
     public InputStream delete(String tokenOrKey) throws IOException, JSONException {
-        return this.application.apiConnect().delete("/server/v1/audios/bytoken/" + tokenOrKey + "", null);
+        return this.application.apiConnect().delete("/v1/audios/" + tokenOrKey + "", null);
     }
 
     public JSONObject create(JSONObject data, File file) throws IOException, JSONException {
     if (file != null) {
-        JSONObject result = this.application.connect().postUploadJSON("/server/v1/audios/audios-upload-url", "audio", data, file, "audio_type");
-        result.put("default_stream", this.application.connect().postJSON("/server/v1/audios/" + result.get("token") + "/streams/" + result.getJSONObject("default_stream").getString("token") + "/confirm-audio"));
+        JSONObject result = this.application.connect().postUploadJSON("/v1/audios-upload-url", "audio", data, file, "audio_type");
+        result.put("default_stream", this.application.connect().postJSON("/v1/audios/" + result.get("token") + "/streams/" + result.getJSONObject("default_stream").getString("token") + "/confirm-audio"));
         return result;
     } else
-            return this.application.apiConnect().postJSON("/server/v1/audios/", data);
+            return this.application.apiConnect().postJSON("/v1/audios/", data);
     }
 
 }

@@ -16,28 +16,28 @@ public class ZiggeoAudioStreams {
     }
 
     public JSONArray index(String audioTokenOrKey, JSONObject data) throws IOException, JSONException {
-        return this.application.apiConnect().getJSONArray("/server/v1/audios/bytoken/" + audioTokenOrKey + "/streams", data);
+        return this.application.apiConnect().getJSONArray("/v1/audios/" + audioTokenOrKey + "/streams", data);
     }
 
     public JSONObject get(String audioTokenOrKey, String tokenOrKey) throws IOException, JSONException {
-        return this.application.apiConnect().getJSON("/server/v1/audios/bytoken/" + audioTokenOrKey + "/streams/bytoken/" + tokenOrKey + "", null);
+        return this.application.apiConnect().getJSON("/v1/audios/" + audioTokenOrKey + "/streams/" + tokenOrKey + "", null);
     }
 
     public InputStream downloadAudio(String audioTokenOrKey, String tokenOrKey) throws IOException, JSONException {
-        return this.application.connect().get("/v1/server/v1/audios/bytoken/" + audioTokenOrKey + "/streams/bytoken/" + tokenOrKey + "/audio", null);
+        return this.application.jsCdnConnect().get("/v1/audios/" + audioTokenOrKey + "/streams/" + tokenOrKey + "/audio", null);
     }
 
     public InputStream delete(String audioTokenOrKey, String tokenOrKey) throws IOException, JSONException {
-        return this.application.apiConnect().delete("/server/v1/audios/bytoken/" + audioTokenOrKey + "/streams/bytoken/" + tokenOrKey + "", null);
+        return this.application.apiConnect().delete("/v1/audios/" + audioTokenOrKey + "/streams/" + tokenOrKey + "", null);
     }
 
     public JSONObject create(String audioTokenOrKey, JSONObject data, File file) throws IOException, JSONException {
     if (file != null) {
-        JSONObject result = this.application.connect().postUploadJSON("/server/v1/audios/" + audioTokenOrKey + "/streams-upload-url", "stream", data, file, "audio_type");
-        result = this.application.connect().postJSON("/server/v1/audios/" + audioTokenOrKey + "/streams/" + result.get("token") + "/confirm-video");
+        JSONObject result = this.application.connect().postUploadJSON("/v1/audios/" + audioTokenOrKey + "/streams-upload-url", "stream", data, file, "audio_type");
+        result = this.application.connect().postJSON("/v1/audios/" + audioTokenOrKey + "/streams/" + result.get("token") + "/confirm-audio");
         return result;
     } else
-            return this.application.apiConnect().postJSON("/server/v1/audios/bytoken/" + audioTokenOrKey + "/streams", data);
+            return this.application.apiConnect().postJSON("/v1/audios/" + audioTokenOrKey + "/streams", data);
     }
 
 }

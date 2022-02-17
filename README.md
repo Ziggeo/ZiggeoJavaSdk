@@ -1,6 +1,6 @@
 # Ziggeo's Java Server SDK
 
-latest version: **0.1.28**
+latest version: **0.1.30**
 
 ## Index
 
@@ -53,12 +53,12 @@ latest version: **0.1.28**
         7. [Audios UpdateBulk](#method-audios-updatebulk)
         8. [Audios Delete](#method-audios-delete)
         9. [Audios Create](#method-audios-create)
-    6. [Methods for Audio_streams](#method-audio-streams)
-        1. [Audio_streams Index](#method-audio-streams-index)
-        2. [Audio_streams Get](#method-audio-streams-get)
-        3. [Audio_streams DownloadAudio](#method-audio-streams-downloadaudio)
-        4. [Audio_streams Delete](#method-audio-streams-delete)
-        5. [Audio_streams Create](#method-audio-streams-create)
+    6. [Methods for Audio Streams](#method-audio-streams)
+        1. [Audio Streams Index](#method-audio-streams-index)
+        2. [Audio Streams Get](#method-audio-streams-get)
+        3. [Audio Streams DownloadAudio](#method-audio-streams-downloadaudio)
+        4. [Audio Streams Delete](#method-audio-streams-delete)
+        5. [Audio Streams Create](#method-audio-streams-create)
     7. [Methods for Authtokens](#method-authtokens)
         1. [Authtokens Get](#method-authtokens-get)
         2. [Authtokens Update](#method-authtokens-update)
@@ -200,7 +200,7 @@ Currently available methods are branched off within different categories:
 1. Videos
 2. Streams
 3. Audios
-4. Audio_streams
+4. Audio Streams
 5. Authtokens
 6. Application
 7. Effect Profiles
@@ -631,7 +631,7 @@ ziggeo.audios().create(JSONObject arguments, String file)
 - key: *Unique (optional) name of audio*
 - volatile: *Automatically removed this video if it remains empty*
 
-### Audio_streams<a name="method-audio-streams"></a>
+### Audio Streams<a name="method-audio-streams"></a>
 
 
 The streams resource allows you to directly access all streams associated with a single audio.
@@ -641,7 +641,7 @@ The streams resource allows you to directly access all streams associated with a
 Return all streams associated with a audio
 
 ```java
-ziggeo.audio_streams().index(String audioTokenOrKey, JSONObject arguments)
+ziggeo.audioStreams().index(String audioTokenOrKey, JSONObject arguments)
 ```
 
  Arguments
@@ -652,7 +652,7 @@ ziggeo.audio_streams().index(String audioTokenOrKey, JSONObject arguments)
 Get a single stream
 
 ```java
-ziggeo.audio_streams().get(String audioTokenOrKey, String tokenOrKey)
+ziggeo.audioStreams().get(String audioTokenOrKey, String tokenOrKey)
 ```
 
 #### Download Audio<a name="method-audio-streams-download-audio"></a>
@@ -660,7 +660,7 @@ ziggeo.audio_streams().get(String audioTokenOrKey, String tokenOrKey)
 Download the audio data associated with the stream
 
 ```java
-ziggeo.audio_streams().downloadAudio(String audioTokenOrKey, String tokenOrKey)
+ziggeo.audioStreams().downloadAudio(String audioTokenOrKey, String tokenOrKey)
 ```
 
 #### Delete<a name="method-audio-streams-delete"></a>
@@ -668,7 +668,7 @@ ziggeo.audio_streams().downloadAudio(String audioTokenOrKey, String tokenOrKey)
 Delete the stream
 
 ```java
-ziggeo.audio_streams().delete(String audioTokenOrKey, String tokenOrKey)
+ziggeo.audioStreams().delete(String audioTokenOrKey, String tokenOrKey)
 ```
 
 #### Create<a name="method-audio-streams-create"></a>
@@ -676,7 +676,7 @@ ziggeo.audio_streams().delete(String audioTokenOrKey, String tokenOrKey)
 Create a new stream
 
 ```java
-ziggeo.audio_streams().create(String audioTokenOrKey, JSONObject arguments, String file)
+ziggeo.audioStreams().create(String audioTokenOrKey, JSONObject arguments, String file)
 ```
 
  Arguments

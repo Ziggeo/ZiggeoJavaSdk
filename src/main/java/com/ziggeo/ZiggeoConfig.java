@@ -9,6 +9,8 @@ public class ZiggeoConfig {
     public final String SERVER_API_URL = "https://srv-api.ziggeo.com";
     public final String API_URL = "https://api-us-east-1.ziggeo.com";
     public final String CDN_URL = "https://video-cdn.ziggeo.com";
+    public final String JS_CDN_URL = "https://media-cdn.ziggeo.com";
+    private final Map<String, String> jsCdnRegions;
     private final Map<String, String> cdnRegions;
     private final Map<String, String> resilienceOnFail;
     private final Map<String, String> info;
@@ -25,7 +27,9 @@ public class ZiggeoConfig {
                     apiRegions.put("r1", "https://api-eu-west-1.ziggeo.com");
                 cdnRegions = new HashMap<>();
                     cdnRegions.put("r1", "https://video-cdn-eu-west-1.ziggeo.com");
-                resilienceOnFail = new HashMap<>();
+        				jsCdnRegions = new HashMap<>();
+									jsCdnRegions.put("r1", "https://media-cdn-eu-west-1.ziggeo.com");
+				        resilienceOnFail = new HashMap<>();
         resilienceOnFail.put("error", "Too many failed attempts");
         info = new HashMap<>();
         info.put("progress_show", "no");
@@ -60,6 +64,10 @@ public class ZiggeoConfig {
     public Map<String, String> getCdnRegions() {
         return cdnRegions;
     }
+
+		public Map<String, String> getJsCdnRegions() {
+				return jsCdnRegions;
+		}
 
     public Map<String, String> getResilienceOnFail() {
         return resilienceOnFail;
